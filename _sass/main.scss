@@ -238,8 +238,10 @@ a {
   margin: 0.5rem;
   padding: 0.5rem;
   text-align: center;
-  background-image: url("../img/VRARshoot_blurred2.png");
+  background-image: url("../img/VRARshoot_blurred2_nofilename.png");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
 }
 
 .landing-title {
