@@ -20,7 +20,10 @@ $card-bg-color: linear-gradient(
   rgba(115, 115, 115, 0.15) 15%,
   rgba(43, 45, 47, 1) 80%
 );
-$primary-color: #ff073a;
+$primary-color: #0768c5;
+$slide-width: 1600px;
+$slide-height: 900px;
+$num-slides: 4;
 
 /* General */
 
@@ -235,6 +238,8 @@ a {
   margin: 0.5rem;
   padding: 0.5rem;
   text-align: center;
+  background-image: url("../img/VRARshoot_blurred2.png");
+  background-size: cover;
 }
 
 .landing-title {
@@ -243,7 +248,7 @@ a {
   padding: 0.5rem;
   position: absolute;
   right: 0;
-  top: 40%;
+  top: 69%;
 }
 
 .landing-icons {
@@ -374,6 +379,55 @@ a {
   @keyframes colorTwitter {
     to {
       stroke: #1da1f2;
+    }
+  }
+}
+
+/* About Me Section */
+
+/* Styling the area of the slides */
+#slideshow {
+  overflow: hidden;
+  height: 510px;
+  width: 728px;
+  margin: 0 auto;
+}
+
+/* Style each of the sides 
+with a fixed width and height */
+.slide {
+  float: left;
+  height: $slide-height;
+  width: $slide-width;
+}
+
+/* Add animation to the slides */
+.slide-wrapper {
+
+  /* Calculate the total width on the
+  basis of number of slides */
+  width: calc($slide-width * 4);
+
+  /* Specify the animation with the
+  duration and speed */
+  animation: slide 10s ease infinite;
+}
+
+/* Define the animation 
+for the slideshow */
+@keyframes slide {
+
+  /* Calculate the margin-left for 
+  each of the slides */
+  // @for $i from 0 through 100 {
+  //   @if .slide:has(> *:nth-child($i)) {
+  //     $num-slides: $i;
+  //   }
+  // }
+
+  @for $i from 0 through $num-slides {
+    #{$i * 20%} {
+      margin-left: calc(-$slide-width * #{$i});
     }
   }
 }

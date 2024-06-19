@@ -80,7 +80,7 @@ function browserSyncReload(done) {
  */
 function jekyll(done) {
   return cp
-    .spawn(
+    .exec(
       'bundle',
       [
         'exec',
