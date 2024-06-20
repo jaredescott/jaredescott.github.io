@@ -329,6 +329,16 @@ a {
     }
   }
 
+  .cv:hover {
+    .circle {
+      animation: outWaveIn 1s cubic-bezier(0.42, 0, 0.58, 1) forwards,
+        colorEmail 1s linear forwards;
+    }
+    .social-svg {
+      fill: #d44638;
+    }
+  }
+
   .email:hover {
     .circle {
       animation: outWaveIn 1s cubic-bezier(0.42, 0, 0.58, 1) forwards,
