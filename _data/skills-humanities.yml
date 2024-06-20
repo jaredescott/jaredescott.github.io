@@ -1,0 +1,36 @@
+# > name: Name of your humanities skill
+# > weight: Describes how good you know the skill - values from 1 up to 5
+#
+# Example of a humanities skill
+# - name: Git
+#   weight: 5
+
+- name: Spanish
+  weight: 2
+
+- name: UX/UI
+  weight: 2
+
+- name: Audio Engineering
+  weight: 4
+
+- name: Writing/Rhetoric
+  weight: 2
+
+- name: Composition
+  weight: 3
+
+- name: Music Production
+  weight: 3
+
+- name: Piano
+  weight: 1
+
+- name: Violin
+  weight: 1
+
+- name: Electronic Music
+  weight: 3
+
+- name: Graphic Design
+  weight: 2

@@ -1,0 +1,45 @@
+# > name: Name of your mechanical engineering skill
+# > weight: Describes how good you know the mechanical engineering skill - values from 1 up to 5
+#
+# Example of a mechanical engineering skill
+# - name: mechanical engineering skill
+#   weight: 5
+
+- name: CAD
+  weight: 5
+
+- name: Mill/Lathe
+  weight: 2
+
+- name: CNC
+  weight: 2
+
+- name: Digital Fabrication
+  weight: 5
+
+- name: Dynamic Systems & Controls
+  weight: 4
+
+- name: Electronics
+  weight: 2
+
+- name: Circuit Design
+  weight: 1
+
+- name: Robotics
+  weight: 4
+
+- name: Medical Devices
+  weight: 5
+
+- name: BCIs
+  weight: 2
+
+- name: Data Analysis
+  weight: 3
+
+- name: Signal Processing
+  weight: 3
+
+- name: Mechanical Design
+  weight: 4

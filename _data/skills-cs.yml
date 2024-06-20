@@ -1,0 +1,93 @@
+# > name: Name of your computer science skill
+# > weight: Describes how good you know the computer science skill - values from 1 up to 5
+#
+# Example of a computer science skill
+# - name: computer science skill
+#   weight: 5
+
+- name: C++
+  weight: 5
+
+- name: Python
+  weight: 5
+
+- name: Julia
+  weight: 5
+
+- name: MATLAB
+  weight: 5
+
+- name: HTML
+  weight: 3
+
+- name: Javascript
+  weight: 4
+
+- name: Arduino
+  weight: 3
+
+- name: C
+  weight: 2
+
+- name: C#
+  weight: 1
+
+- name: Max
+  weight: 1
+
+- name: Ruby
+  weight: 1
+
+- name: RISC-V
+  weight: 2
+
+- name: Verilog
+  weight: 1
+
+- name: Artificial Intelligence
+  weight: 3
+
+- name: Machine Learning
+  weight: 3
+
+- name: Computer Vision
+  weight: 4
+
+- name: Voice Recognition Systems
+  weight: 3
+
+- name: Multithreading
+  weight: 3
+
+- name: Quantum Computing
+  weight: 2
+
+- name: SQL
+  weight: 2
+
+- name: Unity
+  weight: 3
+
+- name: Unix
+  weight: 1
+
+- name: Git
+  weight: 1
+
+- name: Shell/Bash
+  weight: 1
+
+- name: Algorithm Design
+  weight: 2
+
+- name: CSS
+  weight: 2
+
+- name: VR
+  weight: 5
+
+- name: AR
+  weight: 5
+
+- name: React
+  weight: 1

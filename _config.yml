@@ -4,7 +4,7 @@
 # title: This will be displayed as the website's name in your browser tab.
 title: Jared Scott
 # description: This will be meta HTML tag content. This can be ignored.
-description: Personal website powered by Jekyll
+description: A metaverse of avatars, an avatar in the metaverse
 # baseurl: The subpath of your site
 # > set this to "", if you renamed the repository to <user>.github.io
 baseurl: ""
@@ -14,7 +14,11 @@ baseurl: ""
 username: Jared Scott
 # typing_text: This will be typed before 'scroll down for more'.
 # > set this to your job title, e.g. Fullstack Developer
-typing_text: Engineer
+typing_text:
+  - Engineer
+  - Developer
+  - Innovator
+  - scroll down for more.
 # For every social button you want to display, set your username or userid
 # If you do not use one of the following websites, then leave it empty
 # > twitter_username:

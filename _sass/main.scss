@@ -20,15 +20,29 @@ $card-bg-color: linear-gradient(
   rgba(115, 115, 115, 0.15) 15%,
   rgba(43, 45, 47, 1) 80%
 );
+
 $orig-blue: #0768c5;
 $usaf-ish-blue: #5dcaa8;
 $azure-blue: #007fff;
+$navy: #0B3C5D;
+$teal: #1C7293;
+$yellow: #F1C40F;
+$orange: #D35400;
+$red: #ff0000;
+$green: #00ff00;
+$blue: #0000ff;
+
 $highlight-color: #008fff;
 $primary-color: $azure-blue;
 $primary-shadow-color: #0748c5;
 $slide-width: 1600px;
 $slide-height: 900px;
 $num-slides: 4;
+
+$skill-color-1: $usaf-ish-blue;
+$skill-color-2: $yellow;
+$skill-color-3: $orange;
+$skill_unit_font_size: 1rem;
 
 /* General */
 
@@ -255,7 +269,7 @@ a {
   padding: 0.5rem;
   position: absolute;
   right: 0;
-  top: 69%;
+  top: 61.8%;
 }
 
 .landing-icons {
@@ -452,41 +466,41 @@ for the slideshow */
     transition: opacity 0.5s;
   }
 
-  div[skill-type="language"] {
-    color: #e84a5f;
+  div[skill-type="meche"] {
+    color: $skill-color-1;
   }
 
-  div[skill-type="framework"] {
-    color: #ff847c;
+  div[skill-type="cs"] {
+    color: $skill-color-2;
   }
 
-  div[skill-type="tool"] {
-    color: #fecea8;
+  div[skill-type="humanities"] {
+    color: $skill-color-3;
   }
 
   div[skill-weight="1"] {
-    font-size: 0.75rem;
-    line-height: 0.25rem;
+    font-size: $skill_unit_font_size * 1;
+    line-height: $skill_unit_font_size * 0.5;
   }
 
   div[skill-weight="2"] {
-    font-size: 1.25rem;
-    line-height: 0.75rem;
+    font-size: $skill_unit_font_size * 2;
+    line-height: $skill_unit_font_size * 1;
   }
 
   div[skill-weight="3"] {
-    font-size: 1.75rem;
-    line-height: 1.25rem;
+    font-size: $skill_unit_font_size * 3;
+    line-height: $skill_unit_font_size * 1.5;
   }
 
   div[skill-weight="4"] {
-    font-size: 2.25rem;
-    line-height: 1.75rem;
+    font-size: $skill_unit_font_size * 4;
+    line-height: $skill_unit_font_size * 2;
   }
 
   div[skill-weight="5"] {
-    font-size: 2.75rem;
-    line-height: 2.25rem;
+    font-size: $skill_unit_font_size * 5;
+    line-height: $skill_unit_font_size * 2.5;
   }
 
   input[type="radio"] {
@@ -741,28 +755,28 @@ for the slideshow */
 
   #skills {
     div[skill-weight="1"] {
-      font-size: 1rem;
+      font-size: 0.5rem;
       line-height: 0rem;
     }
 
     div[skill-weight="2"] {
-      font-size: 2rem;
-      line-height: 1rem;
+      font-size: 1rem;
+      line-height: 0.5rem;
     }
 
     div[skill-weight="3"] {
-      font-size: 3rem;
-      line-height: 2rem;
+      font-size: 1.5rem;
+      line-height: 0.5rem;
     }
 
     div[skill-weight="4"] {
-      font-size: 4rem;
-      line-height: 3rem;
+      font-size: 2rem;
+      line-height: 1.5rem;
     }
 
     div[skill-weight="5"] {
-      font-size: 5rem;
-      line-height: 4rem;
+      font-size: 2.5rem;
+      line-height: 2rem;
     }
 
     .filter-button {
@@ -793,18 +807,18 @@ for the slideshow */
       @include neumorphism-button-pressed();
     }
 
-    input[id="language"]:checked ~ div[skill-type="framework"],
-    input[id="language"]:checked ~ div[skill-type="tool"] {
+    input[id="meche"]:checked ~ div[skill-type="cs"],
+    input[id="meche"]:checked ~ div[skill-type="humanities"] {
       @include filter-out;
     }
 
-    input[id="framework"]:checked ~ div[skill-type="language"],
-    input[id="framework"]:checked ~ div[skill-type="tool"] {
+    input[id="cs"]:checked ~ div[skill-type="meche"],
+    input[id="cs"]:checked ~ div[skill-type="humanities"] {
       @include filter-out;
     }
 
-    input[id="tool"]:checked ~ div[skill-type="language"],
-    input[id="tool"]:checked ~ div[skill-type="framework"] {
+    input[id="humanities"]:checked ~ div[skill-type="meche"],
+    input[id="humanities"]:checked ~ div[skill-type="cs"] {
       @include filter-out;
     }
   }
