@@ -91,3 +91,7 @@
 
 - name: React
   weight: 1
+
+- name: CMake
+  weight: 1
+
