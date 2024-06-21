@@ -1,6 +1,6 @@
 <h1 class="title">{{site.timeline_title}}</h1>
 <p class="subtitle">
-  For more information, have a look at my
+  For more information, hover over each posiiton title, or have a look at my
   <a class="highlight-link" href="{{site.cv_path}}" dowanload target="_blank" rel="noreferrer">
     résumé
   </a>.
@@ -24,7 +24,11 @@
               </span>
             </div>
             <div class="desc neumorphism-card" data-aos="zoom-in-right">
-              {{event.subtitle}}
+              <div class="hover-container">{{event.subtitle}}</div>
+              <div class="hide">
+                <br>
+                <i>{{event.description}}</i>
+              </div>
               {% if event.tags %}
                 <div class="tag-wrapper">
                   {% for tag in event.tags %}
@@ -52,7 +56,11 @@
               </span>
             </div>
             <div class="desc neumorphism-card" data-aos="zoom-in-left">
-              {{event.subtitle}}
+              <div class="hover-container">{{event.subtitle}}</div>
+              <div class="hide">
+                <br>
+                <i>{{event.description}}</i>
+              </div>
               {% if event.tags %}
                 <div class="tag-wrapper">
                   {% for tag in event.tags %}

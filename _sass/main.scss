@@ -200,6 +200,15 @@ a {
 }
 
 
+/* Hoverable container to toggle content visibility */
+.hide {
+  display: none;
+}
+
+.hover-container:hover + .hide {
+  display: block;
+}
+
 
 /* Preloader */
 

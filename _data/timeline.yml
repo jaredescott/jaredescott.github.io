@@ -17,31 +17,38 @@
 #     - tag: Rails
 #   timeline-side: right
 
-- title: airbnb
-  title-url: https://example.com/
-  date: Sep 2019 - Present
-  subtitle: Fullstack Developer
+- title: Gordon-MIT Engineering Leadership Program
+  title-url: https://innovation.mit.edu/resource/gel/
+  date: Sep 2023 - Present
+  subtitle: Engineering Leadership Laboratory Assistant/Researcher
+  description: I collaborated with instructional staff in preparing and administering an engineering leadership curriculum designed for undergraduate and graduate students, under the Technical Leadership & Communication department of the Massachusetts Institute of Technology. Leveraging Google Cloud and AI/computer vision resources, I also developed software to mine and parse online data in order to determine correlations between enrolled classes and career trajectories for program graduates.
   tags:
-    - tag: React
-    - tag: Javascript
-    - tag: Ruby
-    - tag: Rails
+    - tag: Python
+    - tag: Computer Vision
+    - tag: Data Analysis
+    - tag: HTML
+    - tag: Digital Fabrication
   timeline-side: right
 
-- title: Google
-  title-url: https://example.com/
-  date: Mar 2019 - Sep 2019
-  subtitle: Software Engineer as Intern
+- title: Reality Hack, Inc.
+  title-url: http://www.mitrealityhack.com/
+  date: Jan 2023 - Present
+  subtitle: Organizer, Hardware Mentor, Software/Web Developer (Volunteer)
+  description: I collaborated with a team to orchestrate and lead an annual VR/AR hackathon at MIT. My responsibilities included designing workshops on digital fabrication and custom VR hardware, as well as managing relationships with sponsors and overseeing laboratory access for hackers. Additionally, I implemented a Python multistage graph traversal algorithm to organize an SQL database of over 500 hackers into hackathon teams, considering their skills, interests, and teammate preferences collected via an online portal.
   tags:
-    - tag: Flutter
-    - tag: Dart
-    - tag: Keycloak
-  timeline-side: right
+    - tag: VR
+    - tag: AR
+    - tag: Algorithm Design
+    - tag: Digital Fabrication
+    - tag: Python
+    - tag: SQL
+  timeline-side: left
 
-- title: Super University
-  title-url: https://example.com/
-  date: 2017 - 2019
-  subtitle: M.Sc. Computer Science
+- title: Massachusetts Institute of Technology
+  title-url: https://mit.edu/
+  date: 2019 - 2023
+  subtitle: B.S. in Engineering
+  description: Concentration in <b>Learning Machines and Physical Systems</b> as directed by the Department of Mechanical Engineering<br><br>Minor in <b>Computer Science</b><br><br>HASS Concentration in <b>Music</b>
   timeline-side: left
 
 - title: Facebook
