@@ -477,18 +477,18 @@ a {
   justify-content: space-between;
   margin: .5rem;
   padding: .5rem;
-  animation-name: navFadeIn;
-  animation-duration: 7s;
   width: 61.8%;
   bottom: 5%;
   left: 50%;
   transform: translate(-50%);
-  opacity: 70%;
+  opacity: 0.7;
+  animation-name: navFadeIn;
+  animation-duration: 7s;
 }
 
 @keyframes navFadeIn {
-  from {bottom: 0rem; opacity: 0}
-  to {bottom: 5%; opacity: 1}
+  from {bottom: -300rem; opacity: 0}
+  to {bottom: 5%; opacity: 0.7}
 }
 
 /* About Me Section */
