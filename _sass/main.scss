@@ -2,6 +2,8 @@
 
 @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap");
+// @import "../node_modules/bootstrap/scss/bootstrap.scss";
+
 
 /* Variables */
 
@@ -157,6 +159,46 @@ a {
 .neumorphism-card-big {
   box-shadow: 5px 5px 4px #161718, -5px -5px 4px #404346;
 }
+
+/* Modal */
+
+.modal {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 68rem;
+    height: 88rem;
+    overflow: auto
+}
+
+.modal-content {
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 70%;
+    height: 70%;
+    background-color: #2b2d2f;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+
+/* Add Animation */
+@keyframes animatebottom {
+  from {bottom: -300rem; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+/* The Close Button */
+.close {
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+
 
 /* Preloader */
 

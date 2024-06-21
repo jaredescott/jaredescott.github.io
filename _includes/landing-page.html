@@ -11,18 +11,63 @@
     </h1>
     <div class="landing-icons">
       {% if site.cv_download_link != null %}
-      <a class="social-link cv" aria-label="My Résumé" href="{{site.cv_download_link}}">
-        <svg viewBox="0 0 200 200" class="circle">
-          <circle cx="100" cy="100" r="80" />
-        </svg>
-        <div class="social">
-          <svg class="social-svg" viewBox="0 0 48 48">
-            <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="{{ "/assets/img/solid.svg#file" | prepend: site.baseurl }}""></use>
+        <a class="social-link cv" aria-label="My Résumé" id="cv_btn">
+          <svg viewBox="0 0 200 200" class="circle">
+            <circle cx="100" cy="100" r="80" />
           </svg>
+          <div class="social">
+            <svg class="social-svg" viewBox="0 0 48 48">
+              <use x="12" y="12" width="24" height="24" viewBox="0 0 48 48" xlink:href="{{ "/assets/img/solid.svg#file" | prepend: site.baseurl }}""></use>
+            </svg>
+          </div>
+          <span class="label">Résumé</span>
+        </a>
+        <!-- The Modal -->
+        <div id="cvModal" class="modal">
+          <!-- Modal content -->
+          <div class="neumorphism-card modal-content">
+            <span class="neumorphism-button close"> &times; </span>
+            <iframe src="https://drive.google.com/file/d/18DyPk0-DoPQnsA8_DXY0EqW8eYxYJi0_/preview" width=80% height=80% allow="autoplay"></iframe>
+            <br><br>
+            <a class="neumorphism-button" href="{{site.cv_download_link}}">
+              <span class="label">&ensp;Download&ensp;</span>
+            </a>
+            &emsp;
+            <a class="neumorphism-button" id="cv_close">&ensp;Close&ensp;</a>
+          </div>
         </div>
-        <span class="label">Résumé</span>
-      </a>
-    {% endif %}
+        <script>
+          // Get the modal
+          var modal = document.getElementById("cvModal");
+        
+          // Get the button that opens the modal
+          var btn = document.getElementById("cv_btn");
+        
+          // Get the <span> element that closes the modal
+          var span = document.getElementsByClassName("close")[0];
+          var close_btn = document.getElementById("cv_close");
+        
+          // When the user clicks on the button, open the modal
+          btn.onclick = function() {
+          modal.style.display = "grid";
+          }
+        
+          // When the user clicks on <span> (x), close the modal
+          span.onclick = function() {
+          modal.style.display = "none";
+          }
+          close_btn.onclick = function() {
+          modal.style.display = "none";
+          }
+        
+          // When the user clicks anywhere outside of the modal, close it
+          window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = "none";
+          }
+          }
+        </script>
+      {% endif %}
 
       {% if site.email != null %}
         <a class="social-link email" aria-label="My E-Mail" href="mailto:{{site.email}}">

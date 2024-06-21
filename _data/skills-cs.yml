@@ -44,11 +44,14 @@
 - name: Verilog
   weight: 1
 
-- name: Artificial Intelligence
+- name: GenAI
   weight: 3
 
-- name: Machine Learning
-  weight: 3
+- name: ML
+  weight: 4
+
+- name: AI
+  weight: 4
 
 - name: Computer Vision
   weight: 4
@@ -89,11 +92,17 @@
 - name: AR
   weight: 5
 
-- name: React
-  weight: 1
+- name: React Bootstrap
+  weight: 2
 
 - name: CMake
   weight: 1
 
 - name: Optimization
+  weight: 3
+
+- name: SASS
+  weight: 2
+
+- name: Web Dev
   weight: 3
