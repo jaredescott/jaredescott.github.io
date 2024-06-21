@@ -467,6 +467,19 @@ a {
   }
 }
 
+.navbar {
+  color: $text-color;
+  font-size: 5rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  animation-name: animate-bottom;
+  animation-duration: 2s;
+  width: 100%;
+  bottom: 0%;
+}
+
 /* About Me Section */
 
 /* Styling the area of the slides */
