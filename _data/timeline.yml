@@ -3,7 +3,7 @@
 # > date: Time span
 # > subtitle: The description under the title
 # > tags: List of tags you want to associate with the entry
-# > timeline-side: The side on which you want to display the entry: left or right
+# > timeline-side: The side on which you want to display the entry: right or right
 
 # Example of a timeline entry
 # - title: airbnb
@@ -15,7 +15,7 @@
 #     - tag: Javascript
 #     - tag: Ruby
 #     - tag: Rails
-#   timeline-side: right
+#   timeline-side: left
 
 - title: Gordon-MIT Engineering Leadership Program
   title-url: https://innovation.mit.edu/resource/gel/
@@ -28,7 +28,7 @@
     - tag: Data Analysis
     - tag: HTML
     - tag: Digital Fabrication
-  timeline-side: right
+  timeline-side: left
 
 - title: Reality Hack, Inc.
   title-url: http://www.mitrealityhack.com/
@@ -39,30 +39,109 @@
     - tag: VR
     - tag: AR
     - tag: Algorithm Design
+    - tag: CAD
     - tag: Digital Fabrication
     - tag: Python
     - tag: SQL
-  timeline-side: left
+  timeline-side: right
 
 - title: Massachusetts Institute of Technology
   title-url: https://mit.edu/
-  date: 2019 - 2023
-  subtitle: B.S. in Engineering
-  description: Concentration in <b>Learning Machines and Physical Systems</b> as directed by the Department of Mechanical Engineering<br><br>Minor in <b>Computer Science</b><br><br>HASS Concentration in <b>Music</b>
-  timeline-side: left
-
-- title: Facebook
-  title-url: https://example.com/
-  date: Sep 2017 - Mar 2019
-  subtitle: Front-End Developer as Intern
-  tags:
-    - tag: React
-    - tag: Node
-    - tag: Javascript
+  date: Sep 2019 - June 2023
+  subtitle: B.S. in Engineering<br><br>Concentration in <b>Learning Machines and Physical Systems</b> as directed by the Department of Mechanical Engineering<br><br>Minor in <b>Computer Science</b><br><br>HASS Concentration in <b>Music</b>
   timeline-side: right
 
-- title: Super University
-  title-url: https://example.com/
-  date: 2014 - 2017
-  subtitle: B.A. Computer Science
+- title: MIT Department of Mechanical Engineering
+  title-url: https://mit.edu/
+  date: June 2023 - Present
+  subtitle: Teaching Assistant
+  description: I collaboratively designed and administered curricula for two courses focused on teaching the principles of designing and developing extended-reality (XR) software and hardware. The classes were targeted toward undergraduate and graduate students from MIT, Berklee School of Music, UMass Art, and Harvard.
+  tags:
+    - tag: VR
+    - tag: AR
+    - tag: Unity
+    - tag: Imaging
+    - tag: GenAI
+    - tag: Mechanical Design
+    - tag: Electronics
+    - tag: C#
+  timeline-side: right
+
+- title: MIT Division of Student Life
+  title-url: https://mit.edu/
+  date: May 2023 - Aug 2023
+  subtitle: Summer Desk Worker
+  description: I designed, developed, and deployed a suite of JavaScript-based Google apps to digitize and automate resident management for over 500 students and researchers across three MIT residence halls. I also monitored and facilitated building operations and maintenance at one of these residence halls, Burton-Conner House.
+  tags:
+    - tag: JavaScript
+    - tag: HTML
+    - tag: Google Cloud
   timeline-side: left
+
+- title: MIT &times; Canon &times; Sumitomo Heavy Industries
+  title-url: https://meddevdesign.mit.edu/
+  date: 2023
+  subtitle: Medical Device Engineer
+  description: Designed, developed, and programmed a machine and computer vision algorithm for automatic cancer cell colony  imaging and analysis; coauthored a research paper for IEEE and presented the device to academics and sponsors.
+  tags:
+    - tag: Medical Devices
+    - tag: Computer Vision
+    - tag: Mechanical Design
+    - tag: Robotics
+    - tag: Imaging
+    - tag: Data Analysis
+    - tag: CAD
+    - tag: Electronics
+    - tag: Python
+    - tag: C
+  timeline-side: right
+
+- title: MIT Media Lab
+  title-url: https://www.media.mit.edu
+  date: May 2022 - Sep 2022
+  subtitle: Research Intern, Nano-Cybernetic Biotrek Group
+  description: I assisted research into brain modulation by investigating, proposing and implementing computer vision tools in Python, MATLAB, and ImageJ to identify and enumerate neurons and nanodevices in 2D and 3D microscope images.
+  tags:
+    - tag: Computer Vision
+    - tag: Medical Devices
+    - tag: Imaging
+    - tag: Data Analysis
+    - tag: MATLAB
+    - tag: Python
+  timeline-side: left
+
+- title: Massachusetts General Hospital Department of Radiation Oncology
+  title-url: https://gray.mgh.harvard.edu/research/multi-scale-monte-carlo-modeling-lab
+  date: May 2021 - Sep 2021
+  subtitle: Research Intern, Multi-Scale Monte Carlo Modeling Lab
+  description: I furthered cancer treatment planning by collaborating with medical physicists to create digital simulations of particle interactions during proton-based cancer treatment in small animal phantoms. I used the TOPAS-nBio modeling toolkit, which is built on CERN’s Geant4 particle simulation system.
+  tags:
+    - tag: Medical Devices
+    - tag: CAD
+    - tag: Particle Simulation
+    - tag: Imaging
+  timeline-side: left
+
+- title: MIT Kavli Institute for Astrophysics and Space Research &times; NASA
+  title-url: https://space.mit.edu/
+  date: May 2020 - February 2021
+  subtitle: Research Intern, High-Energy Astrophysics
+  description: I collaborated with astrophysicists at the MIT Kavli Institute to create Poisson-based simulations, modeling the interactions of X-rays within charge-coupled devices (CCDs) used by NASA satellites for imaging galaxies and celestial objects. My contributions included proposing and implementing novel digital tools for data visualization, as well as optimizing and accelerating diffraction simulation algorithms by a factor of ten. I had the privilege of presenting my findings at the institute’s SMURF 2020 symposium.
+  tags:
+    - tag: Particle Simulation
+    - tag: Optimization
+    - tag: C++
+    - tag: Python
+    - tag: Julia
+  timeline-side: left
+
+- title: Kent State University College of Aeronautics & Engineering
+  title-url: https://www.kent.edu/cae/robotics-club/
+  date: June 2017 - August 2018
+  subtitle: Research Intern, Robotics (NASA Robot Mining Competition)
+  description: I created mechanical designs for a rover capable of traversing and mining regolith for the NASA Robot Mining Competition. I then collaborated with the Kent State Robotics team to prepare a robot for the 2018 competition. Ultimately, our robot managed to outperform forty-one other university teams and achieve a 3rd place in the national mining competition.
+  tags:
+    - tag: Robotics
+    - tag: Mechanical Design
+    - tag: CAD
+  timeline-side: right

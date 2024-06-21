@@ -43,3 +43,9 @@
 
 - name: Mechanical Design
   weight: 4
+
+- name: Particle Simulation
+  weight: 2
+
+- name: Imaging
+  weight: 4
