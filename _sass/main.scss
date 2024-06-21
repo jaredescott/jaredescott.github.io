@@ -2,6 +2,7 @@
 
 @import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap");
+// @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 // @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
 
@@ -468,16 +469,26 @@ a {
 }
 
 .navbar {
-  color: $text-color;
-  font-size: 5rem;
+  position: absolute;
+  color: #fff;
+  font-size: 150%;
   display: flex;
+  -ms-flex-pack: justify;
   justify-content: space-between;
-  margin: 0.5rem;
-  padding: 0.5rem;
-  animation-name: animate-bottom;
-  animation-duration: 2s;
-  width: 100%;
-  bottom: 0%;
+  margin: .5rem;
+  padding: .5rem;
+  animation-name: navFadeIn;
+  animation-duration: 7s;
+  width: 61.8%;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%);
+  opacity: 70%;
+}
+
+@keyframes navFadeIn {
+  from {bottom: 0rem; opacity: 0}
+  to {bottom: 5%; opacity: 1}
 }
 
 /* About Me Section */
