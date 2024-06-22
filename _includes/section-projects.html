@@ -7,18 +7,22 @@
           <h3>{{project.name}}</h3>
         </div>
         <p class="project-desc">{{project.descr}}</p>
-        {% if project.demo %}
-          <a class="highlight-link" href="{{project.demo}}" target="_blank" rel="noreferrer">
-            Demo
-          </a>
-        {% endif %}
-        {% if project.tags %}
-          <div class="tag-wrapper">
-            {% for tag in project.tags %}
-              <span class="tag neumorphism-card">{{tag.tag}}</span>
-            {% endfor %}
-          </div>
-        {% endif %}
+        <center>
+          {% if project.demo %}
+            <!-- <a class="highlight-link" href="{{project.demo}}" target="_blank" rel="noreferrer">
+              Demo
+            </a> -->
+            <iframe src="{{project.demo}}" allow="autoplay"></iframe>
+          {% endif %}
+          {% if project.media %}
+            <!-- <div class="tag-wrapper">
+              {% for tag in project.tags %}
+                <span class="tag neumorphism-card">{{tag.tag}}</span>
+              {% endfor %}
+            </div> -->
+            {{project.media | join: '<br>'}}
+          {% endif %}
+        </center>
       </div>
     {% endfor %}
   </div>

@@ -13,21 +13,37 @@
 #     - tag: AngularJS
 #     - tag: Node
 
-- name: project X
-  descr: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam"
-  demo: https://example.com/
-  tags:
-    - tag: MongoDB
-    - tag: Express
-    - tag: AngularJS
-    - tag: Node
+- name: MindfleXR
+  descr: "A lightweight, low-cost brain-computer interface solution for hands-free VR control"
+  demo: assets/media/portfolio/etq.mp4
+  # tags:
+  #   - tag: MongoDB
+  #   - tag: Express
+  #   - tag: AngularJS
+  #   - tag: Node
 
-- name: project Y
-  descr: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam"
-  demo: https://example.com/
-  tags:
-    - tag: Python
-    - tag: Django
+- name: A3C3S - An Accessible Colony-Forming Cell Count System
+  descr: ""
+  demo: https://drive.google.com/file/d/1LQVfRH_VoyGoMe9p8g2QqX5rcb43V-tC/preview
+  media:
+    - <iframe src="https://drive.google.com/file/d/1JXwsuBEEyTembVUZ2ZMjPfYc1lNSqVb1/preview" allow="autoplay"></iframe>
 
-- name: project Z
-  descr: "You can also set a project without demo link and no tags"
+- name: RoboResponse
+  descr: ""
+  demo: https://docs.google.com/presentation/d/1ioOv_ZlXdZ4kqoaQBpt9hPxoe6btD1QorY2T1uUH_F4/preview
+  media:
+    - <iframe src="https://drive.google.com/file/d/1am-XIC9vcDR6OegTwh9tPKOO60qvJEGz/preview" allow="autoplay"></iframe>
+
+  # tags:
+  #   - tag: Python
+  #   - tag: Django
+
+- name: Mood Music
+  descr: "NLP User-friendly voice assistant for empathetic music selection and playback"
+  demo: https://drive.google.com/file/d/13GZAoxHnc4DS7WIJgboV9a4nVoV78uWj/preview
+
+- name: Double Agent
+  descr: "Semi-autonomous cable-driven cascading lift competition robot"
+  media: 
+  - <iframe src="https://drive.google.com/file/d/1UrTE7tfUXOaullqoZDlkCuYRoSeKlnk_/preview" allow="autoplay"></iframe>
+  - <iframe src="https://drive.google.com/file/d/1Ur_Cus4lbA-jGooP2tYb5A9DeXGbD6qV/preview" allow="autoplay"></iframe>
