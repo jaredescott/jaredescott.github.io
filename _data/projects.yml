@@ -13,8 +13,24 @@
 #     - tag: AngularJS
 #     - tag: Node
 
+- name: A3C3S
+  subtitle: An Accessible Colony-Forming Cell Count System
+  descr: "Over the course of twelve weeks I and two other students, with the guidance of local doctors and professors, consulted with organizations including Canon U.S.A., Inc. and Sumitomo Heavy Industries to design and fabricate a device for automated imaging and analysis of colony-forming cells (CFC) used in assessing the efficacy of proton beam cancer therapy. We designed this device as a means of replacing the tedious and inconsistent work of manually zooming into and counting CFCs using a microscope and the human eye. We succeeded in converting this process to a sequence of automated camera staging and image captures followed by a Python- and ImageJ-based cell enumeration algorithm, able to be tuned precisely to specific cell types using a total of six function parameters—all replicable by any research laboratory for under $6000 (about one third of the price of related commercial cell counters). The project resulted in a presentation to academics and sponsors showcasing our new device and findings, and a research paper poised for publication to the IEEE Engineering in Medicine and Biology Society."
+  demo: assets/media/portfolio/a3c3s_scanning.mp4
+  media:
+    - <br><a href="https://drive.google.com/file/d/1JXwsuBEEyTembVUZ2ZMjPfYc1lNSqVb1/preview">Presentation</a><br>
+    - <a href="assets\media\portfolio\Med_Device_Project_Paper_CellColonyCounting_v2.pdf">Paper</a>
+
+- name: Syringe Pump
+  subtitle: A Precision Injection Subsystem for Controlled Medication Delivery
+  descr: "I collaborated with a team to design and build a precision syringe pump for medical applications. The device was engineered to deliver accurate and controlled doses of medication, crucial for treatments requiring high precision. Utilizing microcontroller programming and mechanical design principles, we developed a system capable of fine-tuning flow rates and volumes. My contributions included designing, laser-cutting, and assembling an acrylic fixture that effectively constrained the syringe during operation. This project not only enhanced my skills in both software and hardware integration but also demonstrated the potential for improving patient care through innovative engineering solutions."
+  demo: assets/media/portfolio/syringe-pump-topdown.jpg
+  # media:
+  #   - <iframe src="https://drive.google.com/file/d/1JXwsuBEEyTembVUZ2ZMjPfYc1lNSqVb1/preview" allow="autoplay"></iframe>
+
 - name: MindfleXR
-  descr: "A lightweight, low-cost brain-computer interface solution for hands-free VR control"
+  subtitle: An Interface for Cybernetic Telekinesis
+  descr: ""
   demo: assets/media/portfolio/etq.mp4
   # tags:
   #   - tag: MongoDB
@@ -22,13 +38,8 @@
   #   - tag: AngularJS
   #   - tag: Node
 
-- name: A3C3S - An Accessible Colony-Forming Cell Count System
-  descr: ""
-  demo: assets/media/portfolio/a3c3s_scanning.mp4
-  media:
-    - <iframe src="https://drive.google.com/file/d/1JXwsuBEEyTembVUZ2ZMjPfYc1lNSqVb1/preview" allow="autoplay"></iframe>
-
 - name: RoboResponse
+  subtitle: A Teleoperation Solution for Remote Cardio-Pulmonary Resuscitation
   descr: ""
   demo: https://docs.google.com/presentation/d/1ioOv_ZlXdZ4kqoaQBpt9hPxoe6btD1QorY2T1uUH_F4/preview
   media:
@@ -39,11 +50,13 @@
   #   - tag: Django
 
 - name: Mood Music
-  descr: "NLP User-friendly voice assistant for empathetic music selection and playback"
+  subtitle: An NLP-based voice assistant for user-centric music exploration and playback
+  descr: ""
   demo: https://drive.google.com/file/d/13GZAoxHnc4DS7WIJgboV9a4nVoV78uWj/preview
 
 - name: Double Agent
-  descr: "Semi-autonomous cable-driven cascading lift competition robot"
+  subtitle: Semi-autonomous cable-driven cascading lift competition robot
+  descr: ""
   media: 
   - <iframe src="https://drive.google.com/file/d/1UrTE7tfUXOaullqoZDlkCuYRoSeKlnk_/preview" allow="autoplay"></iframe>
   - <iframe src="https://drive.google.com/file/d/1Ur_Cus4lbA-jGooP2tYb5A9DeXGbD6qV/preview" allow="autoplay"></iframe>
