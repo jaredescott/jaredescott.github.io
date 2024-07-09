@@ -24,7 +24,7 @@
 
 - name: A3C3S - An Accessible Colony-Forming Cell Count System
   descr: ""
-  demo: https://drive.google.com/file/d/1LQVfRH_VoyGoMe9p8g2QqX5rcb43V-tC/preview
+  demo: assets/media/portfolio/a3c3s_scanning.mp4
   media:
     - <iframe src="https://drive.google.com/file/d/1JXwsuBEEyTembVUZ2ZMjPfYc1lNSqVb1/preview" allow="autoplay"></iframe>
 
