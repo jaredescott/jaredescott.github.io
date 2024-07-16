@@ -39,7 +39,7 @@
   descr: ""
   demo: assets\media\portfolio\Presentation - Roboresponse.pdf
   media:
-    - <iframe src="assets\media\portfolio\RoboResponseArm.mp4" allow="autoplay"></iframe>
+    - assets\media\portfolio\RoboResponseArm.mp4
   # tags:
   #   - tag: Python
   #   - tag: Django
@@ -49,12 +49,12 @@
   descr: ""
   demo: assets/media/portfolio/Mood Music Slides.pdf
   media:
-    - <iframe src="assets\media\portfolio\Mood Music.pdf" allow="autoplay"></iframe>
+    - assets\media\portfolio\Mood Music.pdf
 
 - name: Double Agent
   subtitle: Semi-autonomous cable-driven cascading lift competition robot
   descr: ""
   demo: assets/media/portfolio/Final 007 Design.png
   media: 
-  - <iframe src="assets/media/portfolio/doubleagent.jpg" allow="autoplay"></iframe>
-  - <iframe src="assets/media/portfolio/Design Review - Scott.pdf" allow="autoplay"></iframe>
+  - assets/media/portfolio/doubleagent.jpg
+  - assets/media/portfolio/Design Review - Scott.pdf
