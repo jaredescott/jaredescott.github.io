@@ -28,15 +28,16 @@
   
 - name: MindfleXR
   subtitle: An Interface for Cybernetic Telekinesis
-  descr: ""
+  descr: "I reconfigured and programmed a single-channel brain-computer interface to communicate with the Meta Quest 2 headset via bluetooth in order to control the position of assets in a custom VR environment built in Unity."
   demo: assets/media/portfolio/etq.mp4
   # tags:
   #   - tag: MongoDB
   #   - tag: Express
 
 - name: RoboResponse
-  subtitle: A Teleoperation Solution for Remote Cardio-Pulmonary Resuscitation
-  descr: ""
+  subtitle: A AR-Enabled Teleoperation Solution for Remote CPR
+  descr: "I led a team of MIT graduate students to design and create an AR teleoperation system to administer CPR using a
+Microsoft HoloLens, a UR5 robot arm, and a custom unmanned vehicle, as part of a team-based robotics competition."
   demo: assets\media\portfolio\Presentation - Roboresponse.pdf
   media:
     - assets\media\portfolio\RoboResponseArm.mp4
