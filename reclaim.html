@@ -4,142 +4,433 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reclaim Task Manager</title>
-    <link rel="stylesheet" href="assets/css/main.min.css">
     <style>
-        .task-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 1rem;
-        }
-        
-        .task-box {
-            background: linear-gradient(145deg, hsla(0,0%,45%,.15) 15%, #2b2d2f 80%);
-            border-radius: 1rem;
-            padding: 1rem;
+        :root {
+            --primary: #2563eb;
+            --success: #22c55e; 
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --accent: #8b5cf6;
         }
 
-        .task-item {
-            margin: 0.5rem 0;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            background: rgba(255,255,255,0.1);
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f3f4f6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
         .api-key-form {
             text-align: center;
-            margin: 2rem auto;
-            max-width: 500px;
+            margin: 40px 0;
         }
 
         .api-key-input {
-            width: 100%;
-            padding: 0.5rem;
-            margin: 0.5rem 0;
-            border-radius: 0.5rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
+            padding: 8px 12px;
+            font-size: 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-        .button {
-            background: #007fff;
-            color: white;
+        .btn {
+            padding: 8px 16px;
+            font-size: 16px;
             border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
+            border-radius: 4px;
+            background: var(--primary);
+            color: white;
             cursor: pointer;
+            margin: 0 4px;
         }
 
-        .button:hover {
-            background: #0056b3;
+        .btn:hover {
+            opacity: 0.9;
         }
 
-        .dependency-line {
-            font-size: 0.8em;
-            color: #007fff;
+        .matrix {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .axis-label {
+            writing-mode: vertical-lr;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .quadrant {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            background: white;
+            min-height: 200px;
+        }
+
+        .quadrant-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .task-item {
+            padding: 8px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-item:hover {
+            background: #f8f9fa;
+        }
+
+        .task-title {
+            flex: 1;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .do { border-left: 4px solid var(--success); }
+        .decide { border-left: 4px solid var(--warning); }
+        .delegate { border-left: 4px solid var(--accent); }
+        .delete { border-left: 4px solid var(--error); }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .up-next {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .dependency-list {
+            margin-top: 4px;
+            font-size: 14px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <div class="layout">
+    <div class="container">
         <div class="api-key-form">
-            <h1>Reclaim Task Manager</h1>
-            <input type="password" id="apiKey" class="api-key-input" placeholder="Enter your Reclaim API key">
-            <button onclick="loadTasks()" class="button">Load Tasks</button>
+            <input type="text" id="apiKey" class="api-key-input" placeholder="Enter your Reclaim API key">
+            <button onclick="initializeApp()" class="btn">Load Tasks</button>
         </div>
-        <div class="task-grid">
-            <div class="task-box">
-                <h2>Active Tasks</h2>
-                <div id="activeTasks"></div>
+
+        <div id="taskMatrix" class="matrix" style="display: none;">
+            <div class="axis-label">Important → Less Important</div>
+            <div class="header">Urgent</div>
+            <div class="header">Not Urgent</div>
+
+            <div></div>
+            <div class="quadrant do">
+                <div class="quadrant-header">
+                    DO (P1)
+                    <button class="btn" onclick="showAddTaskModal('P1')">+</button>
+                </div>
+                <div id="doTasks" class="task-list"></div>
             </div>
-            <div class="task-box">
-                <h2>Dependencies</h2>
-                <div id="taskDependencies"></div>
+            <div class="quadrant decide">
+                <div class="quadrant-header">
+                    DECIDE (P2)
+                    <button class="btn" onclick="showAddTaskModal('P2')">+</button>
+                </div>
+                <div id="decideTasks" class="task-list"></div>
+            </div>
+
+            <div></div>
+            <div class="quadrant delegate">
+                <div class="quadrant-header">
+                    DELEGATE (P3)
+                    <button class="btn" onclick="showAddTaskModal('P3')">+</button>
+                </div>
+                <div id="delegateTasks" class="task-list"></div>
+            </div>
+            <div class="quadrant delete">
+                <div class="quadrant-header">
+                    DELETE (P4)
+                    <button class="btn" onclick="showAddTaskModal('P4')">+</button>
+                </div>
+                <div id="deleteTasks" class="task-list"></div>
             </div>
         </div>
     </div>
 
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <h2>Task Details</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskTitle">Title</label>
+                    <input type="text" id="taskTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="taskPriority">Priority</label>
+                    <select id="taskPriority">
+                        <option value="P1">P1 - Do</option>
+                        <option value="P2">P2 - Decide</option>
+                        <option value="P3">P3 - Delegate</option>
+                        <option value="P4">P4 - Delete</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskDependencies">Dependencies</label>
+                    <select id="taskDependencies" multiple>
+                        <!-- Will be populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="taskNotes">Notes</label>
+                    <textarea id="taskNotes"></textarea>
+                </div>
+                <button type="submit" class="btn">Save</button>
+                <button type="button" class="btn" onclick="closeTaskModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
     <script>
-        const API_URL = "https://api.app.reclaim.ai/api/tasks";
-        
-        async function loadTasks() {
-            const apiKey = document.getElementById('apiKey').value;
+        let apiKey = '';
+        let tasks = [];
+
+        async function initializeApp() {
+            apiKey = document.getElementById('apiKey').value;
             if (!apiKey) {
-                alert('Please enter your API key');
+                alert('Please enter your Reclaim API key');
                 return;
             }
 
+            document.getElementById('taskMatrix').style.display = 'grid';
+            await refreshTasks();
+        }
+
+        async function refreshTasks() {
             try {
-                const response = await fetch(`${API_URL}?status=NEW,SCHEDULED,IN_PROGRESS`, {
+                const response = await fetch('https://api.app.reclaim.ai/api/tasks', {
                     headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Authorization': `Bearer ${apiKey}`
                     }
                 });
-
-                const tasks = await response.json();
-                displayTasks(tasks);
+                
+                if (!response.ok) throw new Error('Failed to fetch tasks');
+                
+                tasks = await response.json();
+                renderTasks();
             } catch (error) {
                 console.error('Error fetching tasks:', error);
                 alert('Error loading tasks. Please check your API key.');
             }
         }
 
-        function displayTasks(tasks) {
-            const activeTasksDiv = document.getElementById('activeTasks');
-            const dependenciesDiv = document.getElementById('taskDependencies');
-            
-            activeTasksDiv.innerHTML = '';
-            dependenciesDiv.innerHTML = '';
+        function renderTasks() {
+            const priorityContainers = {
+                'P1': document.getElementById('doTasks'),
+                'P2': document.getElementById('decideTasks'),
+                'P3': document.getElementById('delegateTasks'),
+                'P4': document.getElementById('deleteTasks')
+            };
 
+            // Clear existing tasks
+            Object.values(priorityContainers).forEach(container => {
+                container.innerHTML = '';
+            });
+
+            // Render tasks
             tasks.forEach(task => {
                 const taskElement = createTaskElement(task);
-                activeTasksDiv.appendChild(taskElement);
-
-                if (task.dependencies && task.dependencies.length > 0) {
-                    const depElement = document.createElement('div');
-                    depElement.className = 'task-item';
-                    depElement.innerHTML = `
-                        <div>${task.title}</div>
-                        <div class="dependency-line">Depends on: ${task.dependencies.join(', ')}</div>
-                    `;
-                    dependenciesDiv.appendChild(depElement);
-                }
+                const priority = task.priority || 'P4';
+                priorityContainers[priority].appendChild(taskElement);
             });
         }
 
         function createTaskElement(task) {
             const div = document.createElement('div');
-            div.className = 'task-item';
+            div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
+            
+            let dependencyHtml = '';
+            if (task.dependencies?.length) {
+                dependencyHtml = `
+                    <div class="dependency-list">
+                        Depends on: ${task.dependencies.map(d => d.title).join(', ')}
+                    </div>
+                `;
+            }
+
             div.innerHTML = `
-                <div>${task.title}</div>
-                <div>Priority: ${task.priority}</div>
-                <div>Status: ${task.status}</div>
+                <div class="task-title">
+                    ${task.title}
+                    ${dependencyHtml}
+                </div>
+                <div class="task-actions">
+                    <button class="btn" onclick="editTask('${task.id}')">Edit</button>
+                    <button class="btn" onclick="deleteTask('${task.id}')">Delete</button>
+                </div>
             `;
+
             return div;
         }
+
+        function showAddTaskModal(priority) {
+            const modal = document.getElementById('taskModal');
+            const form = document.getElementById('taskForm');
+            const prioritySelect = document.getElementById('taskPriority');
+            
+            // Reset form
+            form.reset();
+            prioritySelect.value = priority;
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Update dependencies dropdown
+            updateDependenciesDropdown();
+        }
+
+        function closeTaskModal() {
+            document.getElementById('taskModal').style.display = 'none';
+        }
+
+        function updateDependenciesDropdown() {
+            const select = document.getElementById('taskDependencies');
+            select.innerHTML = '';
+            
+            tasks.forEach(task => {
+                const option = document.createElement('option');
+                option.value = task.id;
+                option.textContent = task.title;
+                select.appendChild(option);
+            });
+        }
+
+        async function editTask(taskId) {
+            const task = tasks.find(t => t.id === taskId);
+            if (!task) return;
+
+            showAddTaskModal(task.priority);
+            
+            document.getElementById('taskTitle').value = task.title;
+            document.getElementById('taskPriority').value = task.priority;
+            document.getElementById('taskNotes').value = task.notes;
+            
+            // Set dependencies
+            const dependencySelect = document.getElementById('taskDependencies');
+            task.dependencies?.forEach(dep => {
+                const option = dependencySelect.querySelector(`option[value="${dep.id}"]`);
+                if (option) option.selected = true;
+            });
+        }
+
+        async function deleteTask(taskId) {
+            if (!confirm('Are you sure you want to delete this task?')) return;
+
+            try {
+                const response = await fetch(`https://api.app.reclaim.ai/api/tasks/${taskId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to delete task');
+                
+                await refreshTasks();
+            } catch (error) {
+                console.error('Error deleting task:', error);
+                alert('Error deleting task');
+            }
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('taskTitle').value,
+                priority: document.getElementById('taskPriority').value,
+                notes: document.getElementById('taskNotes').value,
+                dependencies: Array.from(document.getElementById('taskDependencies').selectedOptions)
+                    .map(option => option.value)
+            };
+
+            try {
+                const response = await fetch('https://api.app.reclaim.ai/api/tasks', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) throw new Error('Failed to save task');
+                
+                closeTaskModal();
+                await refreshTasks();
+            } catch (error) {
+                console.error('Error saving task:', error);
+                alert('Error saving task');
+            }
+        });
     </script>
 </body>
-</html>
+</html> 
