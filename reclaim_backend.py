@@ -39,7 +39,12 @@ def handle_tasks():
         tasks = response.json()
         # Add dependency info to tasks
         for task in tasks:
-            task['dependencies'] = dependencies.get(str(task['id']), [])
+            # Only add dependencies if they exist in our local storage
+            task_id = str(task['id'])
+            if task_id in dependencies:
+                task['dependencies'] = dependencies[task_id]
+            else:
+                task['dependencies'] = []
         return jsonify(tasks)
     
     elif request.method == 'POST':
@@ -49,7 +54,10 @@ def handle_tasks():
         
         # If task has dependencies, set snoozeUntil to latest due date of dependencies
         if deps:
-            dep_tasks = [t for t in response.json() if str(t['id']) in deps]
+            # First get all tasks to find dependencies
+            tasks_response = requests.get(API_URL, headers=headers)
+            all_tasks = tasks_response.json()
+            dep_tasks = [t for t in all_tasks if str(t['id']) in deps]
             latest_due = max((t['due'] for t in dep_tasks if t.get('due')), default=None)
             if latest_due:
                 data['snoozeUntil'] = latest_due

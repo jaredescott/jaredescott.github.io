@@ -379,7 +379,6 @@
             div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
             
             let dependencyHtml = '';
-            // Only show dependencies if they were explicitly set
             if (task.dependencies && task.dependencies.length > 0) {
                 const depTitles = task.dependencies
                     .map(depId => tasks.find(t => t.id === depId)?.title)
@@ -438,9 +437,11 @@
             const select = document.getElementById('taskDependencies');
             select.innerHTML = '';
             
-            const availableTasks = tasks.filter(task => 
-                task.status !== 'COMPLETE' && task.id !== currentEditingTaskId
-            );
+            // Only show incomplete tasks that aren't the current task
+            const availableTasks = tasks.filter(task => {
+                return task.status !== 'COMPLETE' && 
+                       task.id !== currentEditingTaskId;
+            });
             
             availableTasks.forEach(task => {
                 const option = document.createElement('option');
@@ -475,11 +476,13 @@
 
             // Set dependencies
             const dependencySelect = document.getElementById('taskDependencies');
-            dependencySelect.selectedIndex = -1;
-            task.dependencies.forEach(depId => {
-                const option = dependencySelect.querySelector(`option[value="${depId}"]`);
-                if (option) option.selected = true;
-            });
+            dependencySelect.selectedIndex = -1;  // Clear previous selections
+            if (task.dependencies) {
+                task.dependencies.forEach(depId => {
+                    const option = dependencySelect.querySelector(`option[value="${depId}"]`);
+                    if (option) option.selected = true;
+                });
+            }
         }
 
         async function deleteTask(taskId) {
