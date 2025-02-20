@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reclaim Task Manager</title>
+    <link rel="stylesheet" href="assets/css/main.min.css">
+    <style>
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem;
+        }
+        
+        .task-box {
+            background: linear-gradient(145deg, hsla(0,0%,45%,.15) 15%, #2b2d2f 80%);
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+
+        .task-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .api-key-form {
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+
+        .api-key-input {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .button {
+            background: #007fff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background: #0056b3;
+        }
+
+        .dependency-line {
+            font-size: 0.8em;
+            color: #007fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="api-key-form">
+            <h1>Reclaim Task Manager</h1>
+            <input type="password" id="apiKey" class="api-key-input" placeholder="Enter your Reclaim API key">
+            <button onclick="loadTasks()" class="button">Load Tasks</button>
+        </div>
+        <div class="task-grid">
+            <div class="task-box">
+                <h2>Active Tasks</h2>
+                <div id="activeTasks"></div>
+            </div>
+            <div class="task-box">
+                <h2>Dependencies</h2>
+                <div id="taskDependencies"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://api.app.reclaim.ai/api/tasks";
+        
+        async function loadTasks() {
+            const apiKey = document.getElementById('apiKey').value;
+            if (!apiKey) {
+                alert('Please enter your API key');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}?status=NEW,SCHEDULED,IN_PROGRESS`, {
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const tasks = await response.json();
+                displayTasks(tasks);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+                alert('Error loading tasks. Please check your API key.');
+            }
+        }
+
+        function displayTasks(tasks) {
+            const activeTasksDiv = document.getElementById('activeTasks');
+            const dependenciesDiv = document.getElementById('taskDependencies');
+            
+            activeTasksDiv.innerHTML = '';
+            dependenciesDiv.innerHTML = '';
+
+            tasks.forEach(task => {
+                const taskElement = createTaskElement(task);
+                activeTasksDiv.appendChild(taskElement);
+
+                if (task.dependencies && task.dependencies.length > 0) {
+                    const depElement = document.createElement('div');
+                    depElement.className = 'task-item';
+                    depElement.innerHTML = `
+                        <div>${task.title}</div>
+                        <div class="dependency-line">Depends on: ${task.dependencies.join(', ')}</div>
+                    `;
+                    dependenciesDiv.appendChild(depElement);
+                }
+            });
+        }
+
+        function createTaskElement(task) {
+            const div = document.createElement('div');
+            div.className = 'task-item';
+            div.innerHTML = `
+                <div>${task.title}</div>
+                <div>Priority: ${task.priority}</div>
+                <div>Status: ${task.status}</div>
+            `;
+            return div;
+        }
+    </script>
+</body>
+</html>
