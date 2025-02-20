@@ -335,10 +335,10 @@
             div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
             
             let dependencyHtml = '';
-            if (task.dependencies?.length) {
+            if (task.explicitDependencies?.length) {
                 dependencyHtml = `
                     <div class="dependency-list">
-                        Depends on: ${task.dependencies.map(d => d.title).join(', ')}
+                        Depends on: ${task.explicitDependencies.map(d => d.title).join(', ')}
                     </div>
                 `;
             }
@@ -388,7 +388,12 @@
             const select = document.getElementById('taskDependencies');
             select.innerHTML = '';
             
-            tasks.forEach(task => {
+            const availableTasks = tasks.filter(task => 
+                task.status !== 'COMPLETE' && 
+                !isCircularDependency(task.id)
+            );
+            
+            availableTasks.forEach(task => {
                 const option = document.createElement('option');
                 option.value = task.id;
                 option.textContent = task.title;
@@ -408,7 +413,7 @@
             
             // Set dependencies
             const dependencySelect = document.getElementById('taskDependencies');
-            task.dependencies?.forEach(dep => {
+            task.explicitDependencies?.forEach(dep => {
                 const option = dependencySelect.querySelector(`option[value="${dep.id}"]`);
                 if (option) option.selected = true;
             });
@@ -442,8 +447,25 @@
                 priority: document.getElementById('taskPriority').value,
                 notes: document.getElementById('taskNotes').value,
                 dependencies: Array.from(document.getElementById('taskDependencies').selectedOptions)
-                    .map(option => option.value)
+                    .map(option => ({
+                        id: option.value,
+                        type: 'EXPLICIT'
+                    }))
             };
+
+            if (formData.dependencies.length > 0) {
+                const dependencyTasks = tasks.filter(t => 
+                    formData.dependencies.some(d => d.id === t.id)
+                );
+                const latestEndTime = Math.max(
+                    ...dependencyTasks
+                        .filter(t => t.scheduledEnd)
+                        .map(t => new Date(t.scheduledEnd).getTime())
+                );
+                if (latestEndTime) {
+                    formData.dontStartBefore = new Date(latestEndTime).toISOString();
+                }
+            }
 
             try {
                 const response = await fetch('http://localhost:5000/api/tasks', {
@@ -464,6 +486,18 @@
                 alert('Error saving task');
             }
         });
+
+        function isCircularDependency(taskId, checkedIds = new Set()) {
+            if (checkedIds.has(taskId)) return true;
+            checkedIds.add(taskId);
+            
+            const task = tasks.find(t => t.id === taskId);
+            if (!task?.explicitDependencies?.length) return false;
+            
+            return task.explicitDependencies.some(dep => 
+                isCircularDependency(dep.id, new Set(checkedIds))
+            );
+        }
     </script>
 </body>
 </html> 
