@@ -349,10 +349,17 @@
                     ${dependencyHtml}
                 </div>
                 <div class="task-actions">
-                    <button class="btn" onclick="editTask('${task.id}')">Edit</button>
-                    <button class="btn" onclick="deleteTask('${task.id}')">Delete</button>
+                    <button class="btn edit-btn" data-task-id="${task.id}">Edit</button>
+                    <button class="btn delete-btn" data-task-id="${task.id}">Delete</button>
                 </div>
             `;
+
+            // Add event listeners after creating the element
+            const editBtn = div.querySelector('.edit-btn');
+            const deleteBtn = div.querySelector('.delete-btn');
+            
+            editBtn.addEventListener('click', () => editTask(task.id));
+            deleteBtn.addEventListener('click', () => deleteTask(task.id));
 
             return div;
         }
@@ -397,7 +404,7 @@
             
             document.getElementById('taskTitle').value = task.title;
             document.getElementById('taskPriority').value = task.priority;
-            document.getElementById('taskNotes').value = task.notes;
+            document.getElementById('taskNotes').value = task.notes || '';
             
             // Set dependencies
             const dependencySelect = document.getElementById('taskDependencies');
