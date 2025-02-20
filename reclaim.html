@@ -306,6 +306,21 @@
     <script>
         let apiKey = '';
         let tasks = [];
+        // Store dependencies locally
+        let dependencies = JSON.parse(localStorage.getItem('taskDependencies') || '{}');
+
+        function saveDependencies() {
+            localStorage.setItem('taskDependencies', JSON.stringify(dependencies));
+        }
+
+        function getTaskDependencies(taskId) {
+            return dependencies[taskId] || [];
+        }
+
+        function setTaskDependencies(taskId, dependencyIds) {
+            dependencies[taskId] = dependencyIds;
+            saveDependencies();
+        }
 
         async function initializeApp() {
             apiKey = document.getElementById('apiKey').value;
@@ -363,10 +378,14 @@
             div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
             
             let dependencyHtml = '';
-            if (task.explicitDependencies?.length) {
+            const taskDeps = getTaskDependencies(task.id);
+            if (taskDeps.length) {
+                const depTitles = taskDeps
+                    .map(depId => tasks.find(t => t.id === depId)?.title)
+                    .filter(title => title);
                 dependencyHtml = `
                     <div class="dependency-list">
-                        Depends on: ${task.explicitDependencies.map(d => d.title).join(', ')}
+                        Depends on: ${depTitles.join(', ')}
                     </div>
                 `;
             }
@@ -417,8 +436,7 @@
             select.innerHTML = '';
             
             const availableTasks = tasks.filter(task => 
-                task.status !== 'COMPLETE' && 
-                !isCircularDependency(task.id)
+                task.status !== 'COMPLETE'
             );
             
             availableTasks.forEach(task => {
@@ -440,21 +458,21 @@
             document.getElementById('taskNotes').value = task.notes || '';
             
             // Set scheduling
-            if (task.dontStartBefore) {
-                const startDate = new Date(task.dontStartBefore);
+            if (task.scheduledStart) {
+                const startDate = new Date(task.scheduledStart);
                 document.getElementById('taskStartDate').value = startDate.toISOString().split('T')[0];
                 document.getElementById('taskStartTime').value = startDate.toTimeString().slice(0,5);
             }
-            if (task.dueAt) {
-                const dueDate = new Date(task.dueAt);
+            if (task.scheduledEnd) {
+                const dueDate = new Date(task.scheduledEnd);
                 document.getElementById('taskDueDate').value = dueDate.toISOString().split('T')[0];
                 document.getElementById('taskDueTime').value = dueDate.toTimeString().slice(0,5);
             }
 
             // Set dependencies
             const dependencySelect = document.getElementById('taskDependencies');
-            task.explicitDependencies?.forEach(dep => {
-                const option = dependencySelect.querySelector(`option[value="${dep.id}"]`);
+            getTaskDependencies(task.id).forEach(depId => {
+                const option = dependencySelect.querySelector(`option[value="${depId}"]`);
                 if (option) option.selected = true;
             });
         }
@@ -488,15 +506,14 @@
             const dueDate = document.getElementById('taskDueDate').value;
             const dueTime = document.getElementById('taskDueTime').value;
 
+            // Get selected dependencies
+            const selectedDeps = Array.from(document.getElementById('taskDependencies').selectedOptions)
+                .map(option => option.value);
+
             const formData = {
                 title: document.getElementById('taskTitle').value,
                 priority: document.getElementById('taskPriority').value,
                 notes: document.getElementById('taskNotes').value,
-                dependencies: Array.from(document.getElementById('taskDependencies').selectedOptions)
-                    .map(option => ({
-                        id: option.value,
-                        type: 'EXPLICIT'
-                    }))
             };
 
             // Add scheduling if dates are set
@@ -507,10 +524,9 @@
                 formData.dueAt = `${dueDate}T${dueTime || '23:59'}:00Z`;
             }
 
-            if (formData.dependencies.length > 0) {
-                const dependencyTasks = tasks.filter(t => 
-                    formData.dependencies.some(d => d.id === t.id)
-                );
+            // Calculate start time based on dependencies
+            if (selectedDeps.length > 0) {
+                const dependencyTasks = tasks.filter(t => selectedDeps.includes(t.id));
                 const latestEndTime = Math.max(
                     ...dependencyTasks
                         .filter(t => t.scheduledEnd)
@@ -536,6 +552,10 @@
 
                 if (!response.ok) throw new Error('Failed to save task');
                 
+                // Save dependencies locally after successful API call
+                const savedTask = await response.json();
+                setTaskDependencies(savedTask.id, selectedDeps);
+                
                 closeTaskModal();
                 await refreshTasks();
             } catch (error) {
@@ -543,18 +563,6 @@
                 alert('Error saving task');
             }
         });
-
-        function isCircularDependency(taskId, checkedIds = new Set()) {
-            if (checkedIds.has(taskId)) return true;
-            checkedIds.add(taskId);
-            
-            const task = tasks.find(t => t.id === taskId);
-            if (!task?.explicitDependencies?.length) return false;
-            
-            return task.explicitDependencies.some(dep => 
-                isCircularDependency(dep.id, new Set(checkedIds))
-            );
-        }
     </script>
 </body>
 </html> 
