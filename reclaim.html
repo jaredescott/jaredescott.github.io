@@ -345,6 +345,7 @@
                 if (!response.ok) throw new Error('Failed to fetch tasks');
                 
                 tasks = await response.json();
+                console.log('Fetched tasks:', tasks);
                 renderTasks();
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -411,6 +412,7 @@
             return div;
         }
 
+        let currentEditingTaskId = null;
         function showAddTaskModal(priority) {
             const modal = document.getElementById('taskModal');
             const form = document.getElementById('taskForm');
@@ -419,6 +421,7 @@
             // Reset form
             form.reset();
             prioritySelect.value = priority;
+            currentEditingTaskId = null;
             
             // Show modal
             modal.style.display = 'block';
@@ -436,7 +439,7 @@
             select.innerHTML = '';
             
             const availableTasks = tasks.filter(task => 
-                task.status !== 'COMPLETE'
+                task.status !== 'COMPLETE' && task.id !== currentEditingTaskId
             );
             
             availableTasks.forEach(task => {
@@ -451,6 +454,7 @@
             const task = tasks.find(t => t.id === taskId);
             if (!task) return;
 
+            currentEditingTaskId = taskId;
             showAddTaskModal(task.priority);
             
             document.getElementById('taskTitle').value = task.title;
@@ -458,20 +462,21 @@
             document.getElementById('taskNotes').value = task.notes || '';
             
             // Set scheduling
-            if (task.scheduledStart) {
-                const startDate = new Date(task.scheduledStart);
+            if (task.snoozeUntil) {
+                const startDate = new Date(task.snoozeUntil);
                 document.getElementById('taskStartDate').value = startDate.toISOString().split('T')[0];
                 document.getElementById('taskStartTime').value = startDate.toTimeString().slice(0,5);
             }
-            if (task.scheduledEnd) {
-                const dueDate = new Date(task.scheduledEnd);
+            if (task.due) {
+                const dueDate = new Date(task.due);
                 document.getElementById('taskDueDate').value = dueDate.toISOString().split('T')[0];
                 document.getElementById('taskDueTime').value = dueDate.toTimeString().slice(0,5);
             }
 
             // Set dependencies
             const dependencySelect = document.getElementById('taskDependencies');
-            getTaskDependencies(task.id).forEach(depId => {
+            dependencySelect.selectedIndex = -1;
+            task.dependencies.forEach(depId => {
                 const option = dependencySelect.querySelector(`option[value="${depId}"]`);
                 if (option) option.selected = true;
             });
@@ -514,30 +519,15 @@
                 title: document.getElementById('taskTitle').value,
                 priority: document.getElementById('taskPriority').value,
                 notes: document.getElementById('taskNotes').value,
+                dependencies: selectedDeps
             };
 
             // Add scheduling if dates are set
             if (startDate) {
-                formData.dontStartBefore = `${startDate}T${startTime || '00:00'}:00Z`;
+                formData.snoozeUntil = `${startDate}T${startTime || '00:00'}:00Z`;
             }
             if (dueDate) {
-                formData.dueAt = `${dueDate}T${dueTime || '23:59'}:00Z`;
-            }
-
-            // Calculate start time based on dependencies
-            if (selectedDeps.length > 0) {
-                const dependencyTasks = tasks.filter(t => selectedDeps.includes(t.id));
-                const latestEndTime = Math.max(
-                    ...dependencyTasks
-                        .filter(t => t.scheduledEnd)
-                        .map(t => new Date(t.scheduledEnd).getTime())
-                );
-                if (latestEndTime) {
-                    // Only set dontStartBefore from dependencies if not manually set
-                    if (!startDate) {
-                        formData.dontStartBefore = new Date(latestEndTime).toISOString();
-                    }
-                }
+                formData.due = `${dueDate}T${dueTime || '23:59'}:00Z`;
             }
 
             try {
