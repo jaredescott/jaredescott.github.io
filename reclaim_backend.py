@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 API_URL = "https://api.app.reclaim.ai/api/tasks"
-DEPENDENCIES_FILE = Path("task_dependencies.json")
+DEPENDENCIES_FILE = "../reclaim_dependencies.json"
 
 # Load or initialize dependencies
 if DEPENDENCIES_FILE.exists():
@@ -16,6 +16,9 @@ if DEPENDENCIES_FILE.exists():
         dependencies = json.load(f)
 else:
     dependencies = {}
+    # Create the file
+    with open(DEPENDENCIES_FILE, 'w') as f:
+        json.dump({}, f)
 
 def save_dependencies():
     with open(DEPENDENCIES_FILE, 'w') as f:

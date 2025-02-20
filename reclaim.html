@@ -379,9 +379,9 @@
             div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
             
             let dependencyHtml = '';
-            const taskDeps = getTaskDependencies(task.id);
-            if (taskDeps.length) {
-                const depTitles = taskDeps
+            // Only show dependencies if they were explicitly set
+            if (task.dependencies && task.dependencies.length > 0) {
+                const depTitles = task.dependencies
                     .map(depId => tasks.find(t => t.id === depId)?.title)
                     .filter(title => title);
                 dependencyHtml = `
