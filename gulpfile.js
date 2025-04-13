@@ -79,21 +79,15 @@ function browserSyncReload(done) {
  * Build Jekyll site
  */
 function jekyll(done) {
-  return cp
-    .exec(
-      'bundle',
-      [
-        'exec',
-        'jekyll',
-        'build',
-        '--incremental',
-        '--config=_config.yml,_config_dev.yml'
-      ],
-      {
-        stdio: 'inherit'
-      }
-    )
-    .on('close', done);
+  return cp.exec(
+    'bundle exec jekyll build --incremental --config=_config.yml,_config_dev.yml',
+    function(err, stdout, stderr) {
+      if (err) console.log(err);
+      console.log(stdout);
+      console.log(stderr);
+      done();
+    }
+  );
 }
 
 /**
