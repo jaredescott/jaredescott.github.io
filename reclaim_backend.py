@@ -51,20 +51,18 @@ def handle_tasks():
         data = request.json.copy()  # Copy to modify
         # Store dependencies separately
         deps = data.pop('dependencies', [])
+        # Get task ID from request data and remove it from data sent to Reclaim
+        task_id = data.pop('id', None)
         
-        # If task has dependencies, set snoozeUntil to latest due date of dependencies
-        if deps:
-            # First get all tasks to find dependencies
-            tasks_response = requests.get(API_URL, headers=headers)
-            all_tasks = tasks_response.json()
-            dep_tasks = [t for t in all_tasks if str(t['id']) in deps]
-            latest_due = max((t['due'] for t in dep_tasks if t.get('due')), default=None)
-            if latest_due:
-                data['snoozeUntil'] = latest_due
+        if task_id:
+            # Update the task in Reclaim
+            response = requests.put(f"{API_URL}/{task_id}", headers=headers, json=data)
+        else:
+            # Create new task
+            response = requests.post(API_URL, headers=headers, json=data)
         
-        response = requests.post(API_URL, headers=headers, json=data)
         if response.ok:
-            task_id = str(response.json()['id'])
+            task_id = str(task_id or response.json()['id'])
             dependencies[task_id] = deps
             save_dependencies()
         return jsonify(response.json())

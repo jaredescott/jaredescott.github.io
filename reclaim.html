@@ -161,6 +161,40 @@
             margin-bottom: 16px;
         }
 
+        .dependencies-select {
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 4px;
+            background-color: white;
+        }
+
+        .dependencies-select option {
+            padding: 8px;
+            margin: 2px 0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .dependencies-select option:hover {
+            background-color: #f0f0f0;
+        }
+
+        .dependencies-select option:checked {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .dependencies-help {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
         .form-group label {
             display: block;
             margin-bottom: 4px;
@@ -289,9 +323,12 @@
                 </div>
                 <div class="form-group">
                     <label for="taskDependencies">Dependencies</label>
-                    <select id="taskDependencies" multiple>
+                    <select id="taskDependencies" multiple class="dependencies-select">
                         <!-- Will be populated dynamically -->
                     </select>
+                    <div class="dependencies-help">
+                        Hold Ctrl/Cmd to select multiple tasks. Selected tasks must be completed before this task can start.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="taskNotes">Notes</label>
@@ -330,6 +367,11 @@
                 if (!response.ok) throw new Error('Failed to fetch tasks');
                 
                 tasks = await response.json();
+                console.log('Tasks received from backend:', tasks.map(t => ({
+                    id: t.id,
+                    title: t.title,
+                    dependencies: t.dependencies
+                })));
                 renderTasks();
             } catch (error) {
                 console.error('Error fetching tasks:', error);
@@ -363,15 +405,18 @@
             div.className = `task-item ${task.onDeck ? 'up-next' : ''}`;
             
             let dependencyHtml = '';
-            if (task.dependencies && task.dependencies.length > 0) {
+            // Only show dependencies if they were explicitly set and aren't empty
+            if (task.dependencies?.length > 0) {
                 const depTitles = task.dependencies
                     .map(depId => tasks.find(t => t.id === depId)?.title)
                     .filter(title => title);
-                dependencyHtml = `
-                    <div class="dependency-list">
-                        Depends on: ${depTitles.join(', ')}
-                    </div>
-                `;
+                if (depTitles.length > 0) {
+                    dependencyHtml = `
+                        <div class="dependency-list">
+                            Depends on: ${depTitles.join(', ')}
+                        </div>
+                    `;
+                }
             }
 
             div.innerHTML = `
@@ -419,20 +464,34 @@
 
         function updateDependenciesDropdown() {
             const select = document.getElementById('taskDependencies');
+            // Clear existing options
             select.innerHTML = '';
+
+            // Get current task and its dependencies if editing
+            const currentTask = currentEditingTaskId ? tasks.find(t => t.id === currentEditingTaskId) : null;
+            const dependencies = currentTask?.dependencies || [];
             
-            // Only show incomplete tasks that aren't the current task
-            const availableTasks = tasks.filter(task => {
-                return task.status !== 'COMPLETE' && 
-                       task.id !== currentEditingTaskId;
-            });
-            
-            availableTasks.forEach(task => {
-                const option = document.createElement('option');
-                option.value = task.id;
-                option.textContent = task.title;
-                select.appendChild(option);
-            });
+            // Show all incomplete tasks except current one as options
+            if (currentEditingTaskId) {
+                // For editing: show all tasks except current one
+                tasks.filter(task => task.id !== currentEditingTaskId && task.status !== 'COMPLETE')
+                    .forEach(task => {
+                        const option = document.createElement('option');
+                        option.value = task.id;
+                        option.textContent = task.title;
+                        option.selected = dependencies.includes(task.id);
+                        select.appendChild(option);
+                    });
+            } else {
+                // For new tasks: show all incomplete tasks
+                tasks.filter(task => task.status !== 'COMPLETE')
+                    .forEach(task => {
+                        const option = document.createElement('option');
+                        option.value = task.id;
+                        option.textContent = task.title;
+                        select.appendChild(option);
+                    });
+            }
         }
 
         async function editTask(taskId) {
@@ -458,15 +517,8 @@
                 document.getElementById('taskDueTime').value = dueDate.toTimeString().slice(0,5);
             }
 
-            // Set dependencies
-            const dependencySelect = document.getElementById('taskDependencies');
-            dependencySelect.selectedIndex = -1;  // Clear previous selections
-            if (task.dependencies) {
-                task.dependencies.forEach(depId => {
-                    const option = dependencySelect.querySelector(`option[value="${depId}"]`);
-                    if (option) option.selected = true;
-                });
-            }
+            // Dependencies are now handled in updateDependenciesDropdown
+            updateDependenciesDropdown();
         }
 
         async function deleteTask(taskId) {
@@ -501,13 +553,16 @@
             // Get selected dependencies
             const selectedDeps = Array.from(document.getElementById('taskDependencies').selectedOptions)
                 .map(option => option.value);
+            console.log('Selected dependencies:', selectedDeps);
 
             const formData = {
                 title: document.getElementById('taskTitle').value,
                 priority: document.getElementById('taskPriority').value,
                 notes: document.getElementById('taskNotes').value,
-                dependencies: selectedDeps
+                dependencies: selectedDeps,
+                id: currentEditingTaskId
             };
+            console.log('Sending form data:', formData);
 
             // Add scheduling if dates are set
             if (startDate) {
