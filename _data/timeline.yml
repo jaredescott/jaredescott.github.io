@@ -17,11 +17,29 @@
 #     - tag: Rails
 #   timeline-side: left
 
+- title: PUNKU.AI
+  title-url: 
+  date: Aug 2024 - Aug 2025
+  subtitle: AI Software Developer
+  description: Designing and developing Python/TypeScript components in a web interface for customers to build custom AI Agents.
+  tags:
+    - tag: Python
+    - tag: TypeScript
+    - tag: Web
+    - tag: AI
+  timeline-side: left
+
+- title: Carnegie Mellon University
+  title-url: https://www.cmu.edu/
+  date: Aug 2024 - May 2026
+  subtitle: M.S. in Biomedical Engineering (Research)
+  timeline-side: right
+
 - title: Gordon-MIT Engineering Leadership Program
   title-url: https://innovation.mit.edu/resource/gel/
-  date: Sep 2023 - Present
-  subtitle: Engineering Leadership Laboratory Assistant/Researcher
-  description: I collaborated with instructional staff in preparing and administering an engineering leadership curriculum designed for undergraduate and graduate students, under the Technical Leadership & Communication department of the Massachusetts Institute of Technology. Leveraging Google Cloud and AI/computer vision resources, I also developed software to mine and parse online data in order to determine correlations between enrolled classes and career trajectories for program graduates.
+  date: Sep 2023 - May 2024
+  subtitle: Engineering Leadership Laboratory Teaching Assistant
+  description: Aiding instructional staff to prepare and administer an engineering leadership program for MIT/Wellesley College; crafted computer-vision-based software to mine and parse data correlating academic and professional trajectories.
   tags:
     - tag: Python
     - tag: Computer Vision
@@ -32,9 +50,9 @@
 
 - title: Reality Hack, Inc.
   title-url: http://www.mitrealityhack.com/
-  date: Jan 2023 - Present
-  subtitle: Organizer, Hardware Mentor, Software/Web Developer (Volunteer)
-  description: I collaborated with a team to orchestrate and lead an annual VR/AR hackathon at MIT. My responsibilities included designing workshops on digital fabrication and custom VR hardware, as well as managing relationships with sponsors and overseeing laboratory access for hackers. Additionally, I implemented a Python multistage graph traversal algorithm to organize an SQL database of over 500 hackers into hackathon teams, considering their skills, interests, and teammate preferences collected via an online portal.
+  date: Jan 2023 - Jan 2024
+  subtitle: Organizer, Hardware Mentor; Web/Software Developer (Volunteer)
+  description: Organized and facilitated an annual VR/AR hackathon at MIT; trained participants on digital fabrication and custom VR hardware; implemented an algorithm to organize a database of 500+ hackers into parametrically optimal teams.
   tags:
     - tag: VR
     - tag: AR
@@ -53,9 +71,9 @@
 
 - title: MIT Department of Mechanical Engineering
   title-url: https://mit.edu/
-  date: June 2023 - Present
-  subtitle: Teaching Assistant
-  description: I collaboratively designed and administered curricula for two courses focused on teaching the principles of designing and developing extended-reality (XR) software and hardware. The classes were targeted toward undergraduate and graduate students from MIT, Berklee School of Music, UMass Art, and Harvard.
+  date: June 2023 - June 2024
+  subtitle: Teaching Assistant, Designing Virtual Worlds
+  description: Collaboratively designed and administered curricula teaching principles of designing and developing extended-reality (XR) software and hardware for undergraduate and graduate students from MIT, Berklee School of Music, UMass Art, and Harvard.
   tags:
     - tag: VR
     - tag: AR
@@ -66,6 +84,17 @@
     - tag: Electronics
     - tag: C#
   timeline-side: right
+
+- title: Gordon-MIT Engineering Leadership Program
+  title-url: https://innovation.mit.edu/resource/gel/
+  date: Sep 2022 - May 2023
+  subtitle: Gordon Engineering Leader
+  description: Participated in a selective leader development program; practiced leadership, teamwork, and communication skills complementing technical coursework.
+  tags:
+    - tag: Leadership
+    - tag: Teamwork
+    - tag: Communication
+  timeline-side: left
 
 - title: MIT Division of Student Life
   title-url: https://mit.edu/
