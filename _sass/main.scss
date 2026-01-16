@@ -112,10 +112,13 @@ a {
 }
 
 .layout .card {
-  background: $card-bg-color;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 2rem;
   margin: 3rem 0;
   padding: 1rem 2rem;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
 }
 
 .layout .card .title {
@@ -131,34 +134,69 @@ a {
   text-align: justify;
 }
 
+// Modern button styling - clean and flat with subtle shadows
 .neumorphism-button {
-  background: linear-gradient(
-    145deg,
-    rgba(100, 100, 105, 0.15) 15%,
-    rgba(33, 33, 33, 0.4) 80%
-  );
-  box-shadow: -4px -3px 2px 0 rgba(250, 250, 250, 0.13),
-    4px 4px 2px 0 rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@mixin neumorphism-button {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
 }
 
 @mixin neumorphism-button-pressed {
-  background: linear-gradient(
-    150deg,
-    rgba(20, 20, 20, 0.4) 10%,
-    rgba(115, 115, 115, 0.15) 80%
-  );
-  box-shadow: 1px 1px 2px 0 rgba(210, 210, 210, 0.4),
-    -1px -1px 2px rgba(0, 0, 0, 0.4), inset 3px 3px 2px 0 rgba(0, 0, 0, 0.4),
-    inset -1px -2px 2px rgba(210, 210, 210, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(0);
 }
 
+// Modern card styling - glassmorphism effect
 .neumorphism-card {
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 1),
-    inset -2px -2px 4px rgba(99, 99, 99, 1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 2px 4px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
 }
 
 .neumorphism-card-big {
-  box-shadow: 5px 5px 4px #161718, -5px -5px 4px #404346;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 4px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
 }
 
 /* Modal */
@@ -626,126 +664,192 @@ for the slideshow */
   }
 }
 
-/* Timeline Section */
+/* Timeline Section - Horizontal Auto-Scrolling */
 
 .timeline-wrapper {
-  .timeline {
-    list-style-type: none;
-    padding: 0;
+  margin: 3rem 0;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  
+  .timeline-track {
     position: relative;
+    padding: 5rem 0 3rem;
+    overflow-x: hidden;
+    width: 100%;
   }
-
-  .timeline:before {
-    background: linear-gradient(
-      to bottom,
-      #f3f3f3 0%,
-      #d5d5d5 8%,
-      #d5d5d5 92%,
-      #f3f3f3 100%
-    );
-    content: " ";
-    height: 100%;
-    left: 50%;
-    margin-left: -0.0675rem;
+  
+  .timeline-line {
     position: absolute;
-    width: 0.125rem;
-    z-index: -1;
-  }
-
-  .timeline li {
-    padding: 1rem 0;
-  }
-
-  .hexagon {
-    background: $primary-color;
-    height: 0.5rem;
+    top: 2.5rem;
     left: 0;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
     right: 0;
-    top: -0.8rem;
-    width: 1rem;
+    height: 4px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.2) 5%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0.2) 95%,
+      transparent 100%
+    );
+    z-index: 0;
   }
-
-  .hexagon:before,
-  .hexagon:after {
-    border-left: 2rem solid transparent;
-    border-right: 2rem solid transparent;
-    border-left-width: 0.5rem;
-    border-right-width: 0.5rem;
-    content: "";
-    left: 0;
-    position: absolute;
+  
+  .timeline-container {
+    display: flex;
+    gap: 4rem;
+    padding: 0 5rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
-
-  .hexagon:before {
-    border-bottom: 0.25rem solid $primary-color;
-    top: -0.25rem;
-  }
-
-  .hexagon:after {
-    border-top: 0.25rem solid $primary-color;
-    bottom: -0.25rem;
-  }
-
-  .flag-wrapper {
+  
+  .timeline-item {
     position: relative;
-    text-align: center;
+    flex: 0 0 auto;
+    width: 380px;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 0;
   }
-
-  .flag {
-    background: $bg-color;
-    border-radius: 0.5rem;
-    font-weight: $font-weight-strong;
-    padding: 0.25rem 0.5rem;
-
-    span {
-      position: relative;
-      transition: 0.4s;
-    }
-
-    span:after {
-      content: "\226B";
-      color: $primary-color;
-      position: absolute;
-      opacity: 0;
-      right: -1rem;
-      transition: 0.4s;
-    }
-
-    &:hover span {
-      letter-spacing: 0.05rem;
-      padding-right: 1.25rem;
-    }
-
-    &:hover span:after {
-      opacity: 1;
-      right: 0;
-    }
+  
+  .timeline-marker {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background: $primary-color;
+    border: 5px solid $bg-color;
+    z-index: 2;
+    box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.2), 0 0 25px rgba(0, 127, 255, 0.4);
+    margin-bottom: 2rem;
+    flex-shrink: 0;
+    position: relative;
+    top: -0.75rem;
   }
-
-  .time-wrapper {
-    color: $text-color;
-    display: block;
-    line-height: 0.5rem;
-    margin-top: 0.3rem;
-  }
-
-  .time {
-    background: $bg-color;
-    border-radius: 0.5rem;
-    display: inline-block;
-    padding: .6rem;
-    margin: .5em .1em 0;
-  }
-
-  .desc {
-    background: $bg-color;
+  
+  .timeline-content {
+    width: 100%;
+    padding: 1.75rem;
     border-radius: 1rem;
-    margin: 1em 0 0 0;
-    padding: 0.75em;
-    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5), 0 6px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+  
+  .timeline-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .timeline-title {
+    font-size: 1.1rem;
+    font-weight: $font-weight-strong;
+    margin: 0;
+    line-height: 1.3;
+    
+    a {
+      color: $text-color;
+      text-decoration: none;
+      transition: color 0.2s ease;
+      
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+  
+  .timeline-date {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: normal;
+    font-style: italic;
+  }
+  
+  .timeline-subtitle {
+    font-size: 0.95rem;
+    margin: 0 0 0.75rem 0;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  
+  .timeline-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.7;
+    margin: 0.75rem 0 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+  
+  .timeline-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .timeline-tag {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.75);
+  }
+  
+  .timeline-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    padding-top: 1rem;
+  }
+  
+  .timeline-pause-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+    color: $text-color;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    @include neumorphism-button();
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: scale(1.1);
+    }
+    
+    &:active {
+      @include neumorphism-button-pressed();
+    }
   }
 }
 
@@ -939,67 +1043,19 @@ for the slideshow */
   }
 
   .timeline-wrapper {
-    .timeline {
-      margin: 0 auto;
-      width: 39.25rem;
+    .timeline-item {
+      width: 300px;
+      max-width: 300px;
     }
-
-    .timeline li:after {
-      clear: both;
-      content: "";
-      display: block;
+    
+    .timeline-container {
+      gap: 2rem;
+      padding: 0 2rem;
     }
-
-    .direction-l {
-      float: left;
-      text-align: right;
-      width: 18.5rem;
-
-      .hexagon {
-        left: auto;
-        right: -1.6rem;
-        top: 0.4rem;
-      }
-
-      .flag-wrapper {
-        display: inline-block;
-        text-align: right;
-      }
-
-      .time-wrapper {
-        float: left;
-        margin-top: -0.1rem;
-      }
-
-      .desc {
-        text-align: right;
-      }
-    }
-
-    .direction-r {
-      float: right;
-      text-align: left;
-      width: 18.5rem;
-
-      .hexagon {
-        left: -1.6rem;
-        right: auto;
-        top: 0.4rem;
-      }
-
-      .flag-wrapper {
-        display: inline-block;
-        text-align: left;
-      }
-
-      .time-wrapper {
-        float: right;
-        margin-top: -0.1rem;
-      }
-
-      .desc {
-        text-align: left;
-      }
+    
+    .timeline-content {
+      padding: 1.25rem 1.5rem;
+      min-height: 180px;
     }
   }
 
@@ -1036,19 +1092,6 @@ for the slideshow */
     width: 21.5%;
   }
 
-  .timeline-wrapper {
-    .timeline {
-      width: 49rem;
-    }
-
-    .direction-l {
-      width: 23.35rem;
-    }
-
-    .direction-r {
-      width: 23.35rem;
-    }
-  }
 
   .projects-wrapper {
     > * {
@@ -1066,19 +1109,6 @@ for the slideshow */
     width: 22%;
   }
 
-  .timeline-wrapper {
-    .timeline {
-      width: 58rem;
-    }
-
-    .direction-l {
-      width: 27.9rem;
-    }
-
-    .direction-r {
-      width: 27.9rem;
-    }
-  }
 
   .projects-wrapper {
     > * {
