@@ -35,9 +35,8 @@
   #   - tag: Express
 
 - name: RoboResponse
-  subtitle: A AR-Enabled Teleoperation Solution for Remote CPR
-  descr: "I led a team of MIT graduate students to design and create an AR teleoperation system to administer CPR using a
-Microsoft HoloLens, a UR5 robot arm, and a custom unmanned vehicle, as part of a team-based robotics competition."
+  subtitle: An AR-Enabled Teleoperation Solution for Remote CPR
+  descr: "I led a team of MIT graduate students to design and create an AR teleoperation system to administer CPR using a Microsoft HoloLens, a UR5 robot arm, and a custom unmanned vehicle, as part of a team-based robotics competition."
   demo: assets\media\portfolio\Presentation - Roboresponse.pdf
   media:
     - assets\media\portfolio\RoboResponseArm.mp4
