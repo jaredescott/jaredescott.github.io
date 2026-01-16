@@ -19,9 +19,9 @@
               {% when "png", "jpg", "jpeg", "gif" %}
                 <img src="{{project.demo}}" alt="{{project.name}}" width="100%">
               {% when "mp4", "webm", "ogg" %}
-                <iframe src="{{project.demo}}""></iframe>
+                <video src="{{project.demo}}" controls style="width: 100%; max-width: 800px;"></video>
               {% when "pdf" %}
-                <iframe src="{{project.demo}}" width="80%" allow="autoplay"></iframe>
+                <iframe src="{{project.demo}}" width="80%"></iframe>
             {% endcase %}
             <!-- <iframe src="{{project.demo}}" allow="autoplay"></iframe> -->
           {% endif %}
@@ -38,9 +38,9 @@
                   {% when "png", "jpg", "jpeg", "gif" %}
                     <img src="{{media}}" alt="{{project.name}}" width="50%">
                   {% when "mp4", "webm", "ogg" %}
-                    <iframe src="{{media}}"></iframe>
+                    <video src="{{media}}" controls style="width: 100%; max-width: 800px;"></video>
                   {% when "pdf" %}
-                    <iframe src="{{media}}" width="80%" allow="autoplay"></iframe>
+                    <iframe src="{{media}}" width="80%"></iframe>
                 {% endcase %}
               {% else %}
                 media
