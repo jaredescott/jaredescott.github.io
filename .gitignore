@@ -9,3 +9,7 @@ node_modules
 Gemfile.lock
 vendor/
 .bundle/
+
+# Telesvrgery: generated from Google Drive (see scripts/fetch_telesvrgery.py)
+telesvrgery/index.html
+telesvrgery/index.html.raw

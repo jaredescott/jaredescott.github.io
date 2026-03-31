@@ -112,6 +112,12 @@ projects:
     # - repo1-to-be-excluded
     # - repo2-to-be-excluded
 
+# TELESVRGERY PAGE (primary: /telesvrgery/, alias: /telesurgery/)
+# Poster HTML is NOT stored in git. File ID from Drive share link (between /d/ and /view).
+# Local: pip install -r scripts/requirements-telesvrgery.txt && python scripts/fetch_telesvrgery.py
+# Deploy: .github/workflows/jekyll-pages.yml fetches before Jekyll build (enable Pages → GitHub Actions).
+telesvrgery_drive_file_id: "1SirLNVoEd3YYcbVRLNTR3Muq0cjm6IBs"
+
 # GOOGLE-ANALYTICS
 # Set the id, if you want to track your website with Google Analytics
 # > set this to "", if you do not want to track with Google Analytics
@@ -142,4 +148,5 @@ exclude:
     "gulpfile.js",
     "node_modules",
     "package.json",
+    "scripts",
   ]
