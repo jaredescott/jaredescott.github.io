@@ -117,8 +117,11 @@ projects:
 # Local: pip install -r scripts/requirements-telesvrgery.txt && python scripts/fetch_telesvrgery.py
 # Deploy: .github/workflows/jekyll-pages.yml fetches before Jekyll build (enable Pages → GitHub Actions).
 telesvrgery_drive_file_id: "1SirLNVoEd3YYcbVRLNTR3Muq0cjm6IBs"
-# VR poster image (Drive file ID). Fetched to assets/telesvrgery/vr-view-1.png — use that URL in <img> (Drive URLs break as img src). Leave "" to skip.
+# VR poster images (Drive file IDs). Fetched under assets/telesvrgery/ — use those paths in <img>. Leave "" to skip.
 telesvrgery_vr_view_image_id: "1cMX1lEvc3eMHahnLLKPM4LJd4Z0ACV9D"
+telesvrgery_vr_cylinder_image_id: "1Qhfu8vwZ5ZAV323MDn8iOtBOHmY2g8KU"
+telesvrgery_output_device_image_id: "1dspv44JwIqQxfVEFzHkTsaD7b7pEaH5g"
+telesvrgery_vascular_phantom_image_id: "1-qnc7SZMPBD6lEVPVWCz7LB4l203639N"
 
 # GOOGLE-ANALYTICS
 # Set the id, if you want to track your website with Google Analytics
