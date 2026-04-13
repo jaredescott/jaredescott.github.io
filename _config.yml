@@ -122,6 +122,8 @@ telesvrgery_vr_view_image_id: "1cMX1lEvc3eMHahnLLKPM4LJd4Z0ACV9D"
 telesvrgery_vr_cylinder_image_id: "1Qhfu8vwZ5ZAV323MDn8iOtBOHmY2g8KU"
 telesvrgery_output_device_image_id: "1dspv44JwIqQxfVEFzHkTsaD7b7pEaH5g"
 telesvrgery_vascular_phantom_image_id: "1-qnc7SZMPBD6lEVPVWCz7LB4l203639N"
+# One-page poster PDF (Drive file ID). Injected at top of fetched HTML if not already present.
+telesvrgery_poster_pdf_id: "1-SCjeUMq4apx0m7mHiFF5EaBy2qrjSo0"
 
 # GOOGLE-ANALYTICS
 # Set the id, if you want to track your website with Google Analytics
