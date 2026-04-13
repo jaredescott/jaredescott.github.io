@@ -6,7 +6,6 @@ node_modules
 .env
 .prettierignore
 .jekyll-metadata
-Gemfile.lock
 vendor/
 .bundle/
 
