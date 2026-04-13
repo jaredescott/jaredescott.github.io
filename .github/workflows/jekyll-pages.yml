@@ -1,6 +1,5 @@
 # Builds the site with Jekyll and deploys to GitHub Pages.
 # Requires: Settings → Pages → Build and deployment → Source: GitHub Actions
-# (Disable "Deploy from a branch" if you were using the legacy Jekyll build.)
 
 name: Deploy Jekyll with GitHub Pages
 
@@ -25,6 +24,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -34,18 +39,24 @@ jobs:
         run: |
           pip install -r scripts/requirements-telesvrgery.txt
           python scripts/fetch_telesvrgery.py
+          ls -la telesvrgery/
+          test -s telesvrgery/index.html || (echo "::error::telesvrgery/index.html missing or empty" && exit 1)
 
       - name: Configure Pages
+        id: pages
         uses: actions/configure-pages@v5
 
       - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+        run: bundle exec jekyll build --trace --baseurl "${{ steps.pages.outputs.base_path }}" --destination ./_site
+        env:
+          JEKYLL_ENV: production
+          JEKYLL_GITHUB_TOKEN: ${{ github.token }}
+          PAGES_REPO_NWO: ${{ github.repository }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
 
   deploy:
     environment:
