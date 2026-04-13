@@ -31,7 +31,8 @@ def main() -> None:
     raw_path = out_dir / "index.html.raw"
 
     url = f"https://drive.google.com/uc?id={file_id}"
-    gdown.download(url, str(raw_path), quiet=False, fuzzy=True)
+    # gdown 6.x removed the `fuzzy` kwarg; direct uc?id= URLs do not need it.
+    gdown.download(url, str(raw_path), quiet=False)
 
     body = raw_path.read_text(encoding="utf-8")
     if body.startswith("\ufeff"):
