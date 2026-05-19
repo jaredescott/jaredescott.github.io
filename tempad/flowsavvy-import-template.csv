@@ -1,0 +1,12 @@
+type,name,color,schedulingHours,title,list,due,durationMinutes,priority,repeat,dependsOn,notes
+hours,personal hours,#22c55e,,,,,,,,,
+hours,work hours,#3b82f6,,,,,,,,,
+hours,mornings,#f59e0b,,,,,,,,,
+hours,evenings,#8b5cf6,,,,,,,,,
+hours,afternoons,#0ea5e9,,,,,,,,,
+list,Personal,#22c55e,personal hours,,,,,,,,
+list,CMU,#14b8a6,work hours,,,,,,,,
+list,ASC Compliance,#a16207,work hours,,,,,,,,
+list,Devotional,#84cc16,mornings,,,,,,,,
+list,Career,#dc2626,afternoons,,,,,,,,
+task,,,,Example task,Personal,2026-12-31 17:00,30,normal,none,,
