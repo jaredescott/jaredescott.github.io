@@ -2,10 +2,11 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { seedKaironautPageStorage } from '../../../kaironaut/scripts/demo-persist.mjs';
-import { recordViewportGif } from './gif-utils.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const outFile = path.join(__dirname, '..', 'assets', 'kaironaut-preview.gif');
+const assetsDir = path.join(__dirname, '..', 'assets');
+const chronolabeFile = path.join(assetsDir, 'kaironaut-preview-chronolabe.png');
+const calendarFile = path.join(assetsDir, 'kaironaut-preview-calendar.png');
 const baseUrl = process.env.KAIRONAUT_URL ?? 'https://jaredescott.github.io/kaironaut/';
 
 const browser = await chromium.launch();
@@ -27,8 +28,16 @@ if (await localBtn.isVisible({ timeout: 8000 }).catch(() => false)) {
 
 await page.locator('nav[aria-label="Main"]').waitFor({ state: 'visible', timeout: 15_000 });
 const nav = page.locator('nav[aria-label="Main"]');
-const navChild = (label) => nav.locator(`button[title="${label}"]`).first();
 const recalc = page.getByRole('button', { name: 'Recalculate schedule' });
+
+async function ensureChronolabeNavExpanded() {
+  const group = nav.locator('.sidebar-nav-group').first();
+  const expanded = await group.evaluate((el) => el.classList.contains('is-expanded'));
+  if (!expanded) {
+    await group.locator('.sidebar-nav-group-chevron').click();
+    await page.waitForTimeout(400);
+  }
+}
 
 async function openChronolabe() {
   if (await page.locator('.chronolabe-wrap').isVisible().catch(() => false)) {
@@ -39,11 +48,34 @@ async function openChronolabe() {
   await page.waitForTimeout(500);
 }
 
+async function goToCalendar() {
+  await ensureChronolabeNavExpanded();
+  await nav.getByRole('button', { name: 'Calendar', exact: true }).click();
+  await page.locator('.calendar-view').waitFor({ state: 'visible', timeout: 10_000 });
+  await page.waitForTimeout(800);
+}
+
 async function runRecalculate() {
-  if (await recalc.isVisible({ timeout: 3000 }).catch(() => false)) {
-    await recalc.click();
-    await page.waitForTimeout(4500);
+  const btn = page.getByRole('button', { name: 'Recalculate schedule' });
+  if (await btn.isVisible({ timeout: 5000 }).catch(() => false)) {
+    await btn.click();
+    await page.waitForTimeout(5500);
   }
+}
+
+async function waitForChronolabeSegments(min = 1) {
+  await page.waitForFunction(
+    (n) => document.querySelectorAll('.chronolabe-segment:not(.is-dragging)').length >= n,
+    min,
+    { timeout: 20_000 },
+  ).catch(() => {});
+}
+
+async function waitForCalendarBlocks() {
+  await page.waitForFunction(
+    () => document.querySelectorAll('.calendar-block, .calendar-all-day-item').length > 0,
+    { timeout: 20_000 },
+  ).catch(() => {});
 }
 
 async function segmentCount() {
@@ -62,6 +94,7 @@ async function goToToday() {
 async function focusBusiestChronolabeDay() {
   await openChronolabe();
   await runRecalculate();
+  await waitForChronolabeSegments(1);
   await goToToday();
 
   let bestCount = -1;
@@ -87,21 +120,14 @@ async function focusBusiestChronolabeDay() {
 }
 
 await focusBusiestChronolabeDay();
+await page.screenshot({ path: chronolabeFile });
+console.log(`wrote ${chronolabeFile}`);
 
-await recordViewportGif(page, outFile, async (add) => {
-  await add(1400);
-  await add(1400);
-
-  await navChild('Calendar').click();
-  await page.waitForTimeout(900);
-  await runRecalculate();
-  await add(1400);
-  await add(1400);
-
-  await openChronolabe();
-  await focusBusiestChronolabeDay();
-  await add(1400);
-  await add(1400);
-});
+await goToCalendar();
+await runRecalculate();
+await waitForCalendarBlocks();
+await page.waitForTimeout(600);
+await page.screenshot({ path: calendarFile });
+console.log(`wrote ${calendarFile}`);
 
 await browser.close();

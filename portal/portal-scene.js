@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { loadGifTexture, tickGifTexture } from './portal-gif-texture.js';
 
 const BG_Z = -5.5;
 const BG_SIZE = { w: 22, h: 14, y: 0.2 };
@@ -112,11 +111,14 @@ const PORTALS = [
   {
     id: 'kaironaut',
     href: '/kaironaut/',
-    texture: 'assets/kaironaut-preview.gif',
+    textures: [
+      'assets/kaironaut-preview-chronolabe.png',
+      'assets/kaironaut-preview-calendar.png',
+    ],
+    cycleInterval: 2.8,
     accent: 0x93c5fd,
     shape: 'rect',
     brightness: 1.0,
-    animated: true,
   },
 ];
 
@@ -228,7 +230,6 @@ scene.add(particles);
 
 const portalMeshes = [];
 const portalGroups = [];
-const gifPlayers = [];
 
 function loadPreviewTexture(url) {
   return new Promise((resolve) => {
@@ -253,18 +254,16 @@ async function buildPortal(config) {
   const group = new THREE.Group();
   let texture = null;
   let texAspect = 16 / 10;
-  let gifPlayer = null;
+  let cycleTextures = null;
 
-  if (config.animated) {
-    gifPlayer = await loadGifTexture(config.texture);
-    if (gifPlayer) {
-      texture = gifPlayer.tex;
-      texAspect = gifPlayer.aspect;
-      gifPlayers.push(gifPlayer);
+  if (config.textures?.length) {
+    const loaded = await Promise.all(config.textures.map((url) => loadPreviewTexture(url)));
+    cycleTextures = loaded.map((entry) => entry?.tex).filter(Boolean);
+    if (cycleTextures.length) {
+      texture = cycleTextures[0];
+      texAspect = loaded[0]?.aspect ?? texAspect;
     }
-  }
-
-  if (!texture) {
+  } else if (config.texture) {
     const loaded = await loadPreviewTexture(config.texture);
     texture = loaded?.tex ?? null;
     texAspect = loaded?.aspect ?? texAspect;
@@ -315,7 +314,7 @@ async function buildPortal(config) {
   group.add(glow);
 
   scene.add(group);
-  portalGroups.push({ group, portal, glow, config });
+  portalGroups.push({ group, portal, glow, config, cycleTextures });
   portalMeshes.push(portal);
 }
 
@@ -429,12 +428,18 @@ function alignPortalsToSlots() {
 function animate() {
   requestAnimationFrame(animate);
   const t = clock.getElapsedTime();
-  const deltaMs = clock.getDelta() * 1000;
 
   particles.rotation.y = t * 0.012;
-  gifPlayers.forEach((player) => tickGifTexture(player, deltaMs));
 
-  portalGroups.forEach(({ portal, glow, config }) => {
+  portalGroups.forEach(({ portal, glow, config, cycleTextures }) => {
+    if (cycleTextures?.length > 1 && portal.material.uniforms?.uTexture) {
+      const interval = config.cycleInterval ?? 2.8;
+      const idx = Math.floor(t / interval) % cycleTextures.length;
+      const nextTex = cycleTextures[idx];
+      if (portal.material.uniforms.uTexture.value !== nextTex) {
+        portal.material.uniforms.uTexture.value = nextTex;
+      }
+    }
     const hover = hoveredPortal?.userData.id === config.id ? 1 : 0;
     if (portal.material.uniforms?.uHover) {
       portal.material.uniforms.uHover.value = THREE.MathUtils.lerp(

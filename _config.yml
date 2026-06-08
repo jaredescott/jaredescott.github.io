@@ -113,6 +113,7 @@ projects:
     # - repo2-to-be-excluded
 
 # TELESVRGERY PAGE (primary: /telesvrgery/, alias: /telesurgery/)
+# PORTAL PAGE (primary: /portal/, alias: /arcodia/)
 # Poster HTML is NOT stored in git. File ID from Drive share link (between /d/ and /view).
 # Local: pip install -r scripts/requirements-telesvrgery.txt && python scripts/fetch_telesvrgery.py
 # Deploy: .github/workflows/jekyll-pages.yml fetches before Jekyll build (enable Pages → GitHub Actions).
