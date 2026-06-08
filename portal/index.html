@@ -8,8 +8,8 @@ layout: null
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Arcadian portal — Jared Scott</title>
-  <meta name="description" content="Step through kaleidoscopic portals to RePackr and Kaironaut.">
+  <title>Portal - jaredescott.github.io</title>
+  <meta name="description" content="A collection of apps by yours truly.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
@@ -152,8 +152,8 @@ layout: null
     }
 
     .portal-slot {
-      width: min(36vw, 300px);
-      aspect-ratio: 1;
+      width: min(42vw, 380px);
+      aspect-ratio: 16 / 10;
       pointer-events: none;
     }
 
@@ -321,7 +321,8 @@ layout: null
       }
 
       .portal-slot {
-        width: min(62vw, 260px);
+        width: min(88vw, 340px);
+        aspect-ratio: 16 / 10;
       }
     }
 
@@ -334,7 +335,8 @@ layout: null
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+      "gifuct-js": "https://cdn.jsdelivr.net/npm/gifuct-js@2.1.2/+esm"
     }
   }
   </script>
@@ -345,11 +347,10 @@ layout: null
 
   <main class="stage">
     <header class="intro">
-      <p class="intro-eyebrow">Arcadian threshold</p>
-      <h1>App portal</h1>
+      <p class="intro-eyebrow">Arcodia</p>
+      <h1>A collection of web apps by Jared Scott</h1>
       <p>
-        Two paths through the indigo mist — RePackr for travel packing lists,
-        and Kaironaut for automated scheduling around your day.
+        I've been building software and web apps for myself and others for about a decade now. Here are a couple of my recent projects I hope you'll find interesting/useful:
       </p>
     </header>
 
@@ -363,9 +364,10 @@ layout: null
             <div class="portal-title-row">
               <img class="portal-mark" src="assets/repackr-mark.svg" alt="" width="32" height="32">
               <h2 class="portal-name">RePackr</h2>
+              <small class="portal-name-year">(2024)</small>
             </div>
-            <p class="portal-tagline">Travel packing planner</p>
-            <p class="portal-desc">Build lists, track what is packed, and print totals before you leave.</p>
+            <p class="portal-tagline">An intuitive, accessible packing planner tool</p>
+            <p class="portal-desc">Quickly build packing lists, sync and access them from any device, and track what is packed before you travel. I created it to help me stay organized, pack light, and make sure I don't forget anything.</p>
           </a>
         </article>
       </section>
@@ -376,21 +378,20 @@ layout: null
             <div class="portal-title-row">
               <img class="portal-mark" src="assets/kaironaut-mark.svg" alt="" width="32" height="32">
               <h2 class="portal-name">Kaironaut</h2>
+              <small class="portal-name-year">(2026)</small>
               <span class="portal-featured-tag">Featured</span>
             </div>
-            <p class="portal-tagline">Navigate your schedule</p>
-            <p class="portal-desc">Personal task calendar with automated scheduling and task dependencies.</p>
+            <p class="portal-tagline">Navigate your timestream</p>
+            <p class="portal-desc">Built to be the mother of all planner apps, with bespoke scheduling automation and research-backed personal productivity insights.</p>
           </a>
           <p class="portal-precursor">
-            Evolved from <a href="/tempad/">TemPad</a> — same scheduling core, nautical rebrand.
-            Import your data via Kaironaut Settings.
-            See the <a href="/kaironaut/docs/">Kaironaut docs</a> for guides and setup.
+            Kaironaut represents a project that has been on my heart for years, and is a chimera of some time management features I've seen across various productivity apps as well as others I've dreamed of but hadn't seen implemented before. It is the new and improved successor to another automated planner app I built, <a href="/tempad/">TemPad (2026)</a>, which in turn was the spiritual successor to <a href="https://github.com/jaredescott/AIsenhower">AIsenhower (2023)</a>, a Julia desktop frontend for task management. See the <a href="/kaironaut/docs/">Kaironaut docs</a> for guides/setup (or just jump right in and try it out!).
           </p>
         </article>
       </section>
     </div>
 
-    <p class="hint">Click a portal to enter</p>
+    <p class="hint">Built with &lt;3 by <a href="https://jaredescott.github.io/">Jared Scott</a></p>
   </main>
 
   <script type="module" src="portal-scene.js"></script>

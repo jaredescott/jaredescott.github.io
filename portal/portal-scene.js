@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { loadGifTexture, tickGifTexture } from './portal-gif-texture.js';
 
 const BG_Z = -5.5;
 const BG_SIZE = { w: 22, h: 14, y: 0.2 };
@@ -42,7 +43,7 @@ const PORTAL_PREVIEW_FRAG = `
   }
 
   void main() {
-    vec2 sampleUv = fitContain(vUv);
+    vec2 sampleUv = (uShape > 0.5) ? fitContain(vUv) : vUv;
     float inBounds = step(0.001, sampleUv.x) * step(sampleUv.x, 0.999)
       * step(0.001, sampleUv.y) * step(sampleUv.y, 0.999);
     vec3 col = texture2D(uTexture, clamp(sampleUv, 0.001, 0.999)).rgb * uBrightness;
@@ -105,24 +106,23 @@ const PORTALS = [
     href: '/repackr/',
     texture: 'assets/repackr-preview.png',
     accent: 0x2563eb,
-    shape: 'circle',
+    shape: 'rect',
     brightness: 0.88,
-    portalAspect: 1,
   },
   {
     id: 'kaironaut',
     href: '/kaironaut/',
-    texture: 'assets/kaironaut-chronolabe.png',
+    texture: 'assets/kaironaut-preview.gif',
     accent: 0x93c5fd,
-    shape: 'circle',
+    shape: 'rect',
     brightness: 1.0,
-    portalAspect: 1,
+    animated: true,
   },
 ];
 
 const LENS_SLOTS = [
-  { id: 'repackr', shape: 'circle', lensScale: 0.92 },
-  { id: 'kaironaut', shape: 'circle', lensScale: 0.92 },
+  { id: 'repackr', shape: 'rect', lensScale: 0.94 },
+  { id: 'kaironaut', shape: 'rect', lensScale: 0.94 },
 ];
 
 const canvas = document.getElementById('portal-canvas');
@@ -228,6 +228,7 @@ scene.add(particles);
 
 const portalMeshes = [];
 const portalGroups = [];
+const gifPlayers = [];
 
 function loadPreviewTexture(url) {
   return new Promise((resolve) => {
@@ -250,10 +251,26 @@ function loadPreviewTexture(url) {
 
 async function buildPortal(config) {
   const group = new THREE.Group();
-  const loaded = await loadPreviewTexture(config.texture);
-  const texture = loaded?.tex ?? null;
-  const texAspect = loaded?.aspect ?? 1;
-  const portalAspect = config.portalAspect ?? 1;
+  let texture = null;
+  let texAspect = 16 / 10;
+  let gifPlayer = null;
+
+  if (config.animated) {
+    gifPlayer = await loadGifTexture(config.texture);
+    if (gifPlayer) {
+      texture = gifPlayer.tex;
+      texAspect = gifPlayer.aspect;
+      gifPlayers.push(gifPlayer);
+    }
+  }
+
+  if (!texture) {
+    const loaded = await loadPreviewTexture(config.texture);
+    texture = loaded?.tex ?? null;
+    texAspect = loaded?.aspect ?? texAspect;
+  }
+
+  const portalAspect = config.portalAspect ?? texAspect;
 
   const portalMat = new THREE.ShaderMaterial({
     uniforms: {
@@ -386,8 +403,12 @@ function updateBackgroundLens() {
     bgUniforms[`uPortal${index}`].value.set(metrics.x, metrics.y);
 
     const scale = slot.lensScale ?? 1.0;
-    const r = Math.max(metrics.rx, metrics.ry) * scale;
-    bgUniforms[`uRadius${index}`].value.set(r, r);
+    if (slot.shape === 'rect') {
+      bgUniforms[`uRadius${index}`].value.set(metrics.rx * scale, metrics.ry * scale);
+    } else {
+      const r = Math.max(metrics.rx, metrics.ry) * scale;
+      bgUniforms[`uRadius${index}`].value.set(r, r);
+    }
 
     if (index === 0) {
       bgUniforms.uStrength.value = 0.34;
@@ -408,8 +429,10 @@ function alignPortalsToSlots() {
 function animate() {
   requestAnimationFrame(animate);
   const t = clock.getElapsedTime();
+  const deltaMs = clock.getDelta() * 1000;
 
   particles.rotation.y = t * 0.012;
+  gifPlayers.forEach((player) => tickGifTexture(player, deltaMs));
 
   portalGroups.forEach(({ portal, glow, config }) => {
     const hover = hoveredPortal?.userData.id === config.id ? 1 : 0;

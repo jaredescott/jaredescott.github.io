@@ -1,3 +1,4 @@
+<!-- Background: Ben Moore / Unsplash (photo-1519681393784-d120267933ba) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,8 +148,8 @@
     }
 
     .portal-slot {
-      width: min(36vw, 300px);
-      aspect-ratio: 1;
+      width: min(42vw, 380px);
+      aspect-ratio: 16 / 10;
       pointer-events: none;
     }
 
@@ -316,7 +317,8 @@
       }
 
       .portal-slot {
-        width: min(62vw, 260px);
+        width: min(88vw, 340px);
+        aspect-ratio: 16 / 10;
       }
     }
 
@@ -329,7 +331,8 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+      "gifuct-js": "https://cdn.jsdelivr.net/npm/gifuct-js@2.1.2/+esm"
     }
   }
   </script>
@@ -391,4 +394,3 @@
   <script type="module" src="portal-scene.js"></script>
 </body>
 </html>
-{% endraw %}
