@@ -1,0 +1,181 @@
+<style>
+  .iota-promo {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(10, 12, 14, 0.72);
+    backdrop-filter: blur(4px);
+  }
+
+  .iota-promo.is-open {
+    display: flex;
+  }
+
+  .iota-promo-card {
+    position: relative;
+    width: min(26rem, 100%);
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 1rem;
+    background: #2b2d2f;
+    box-shadow: 8px 8px 16px #161718, -8px -8px 16px #404346;
+    color: #e8eaed;
+    text-align: center;
+    animation: iota-promo-in 0.35s ease;
+  }
+
+  @keyframes iota-promo-in {
+    from { opacity: 0; transform: translateY(0.75rem) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .iota-promo-close {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.85rem;
+    border: 0;
+    background: transparent;
+    color: #9aa0a6;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .iota-promo-close:hover,
+  .iota-promo-close:focus-visible {
+    color: #fff;
+  }
+
+  .iota-promo-eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #008fff;
+  }
+
+  .iota-promo-title {
+    margin: 0 0 0.65rem;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .iota-promo-title span {
+    color: #008fff;
+  }
+
+  .iota-promo-copy {
+    margin: 0 0 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: #c4c7cc;
+  }
+
+  .iota-promo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: center;
+  }
+
+  .iota-promo-cta,
+  .iota-promo-dismiss {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.1rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+  }
+
+  .iota-promo-cta {
+    background: #008fff;
+    color: #fff;
+    box-shadow: 0 0.35rem 0.85rem rgba(0, 143, 255, 0.35);
+  }
+
+  .iota-promo-cta:hover,
+  .iota-promo-cta:focus-visible {
+    filter: brightness(1.08);
+    color: #fff;
+  }
+
+  .iota-promo-dismiss {
+    background: transparent;
+    color: #9aa0a6;
+    box-shadow: inset 3px 3px 6px #161718, inset -3px -3px 6px #404346;
+  }
+
+  .iota-promo-dismiss:hover,
+  .iota-promo-dismiss:focus-visible {
+    color: #fff;
+  }
+</style>
+
+<div id="iota-promo" class="iota-promo" role="dialog" aria-modal="true" aria-labelledby="iota-promo-title" hidden>
+  <div class="iota-promo-card">
+    <button type="button" class="iota-promo-close" id="iota-promo-close" aria-label="Dismiss">&times;</button>
+    <p class="iota-promo-eyebrow">Current project</p>
+    <h2 class="iota-promo-title" id="iota-promo-title">iota<span>.ai</span></h2>
+    <p class="iota-promo-copy">A tabletop imaging platform that counts cells, colonies, specimens, and other things too small to tally by hand.</p>
+    <div class="iota-promo-actions">
+      <a class="iota-promo-cta" href="https://jaredescott.github.io/iota/">Visit iota.ai</a>
+      <button type="button" class="iota-promo-dismiss" id="iota-promo-dismiss">Not now</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var STORAGE_KEY = "iotaPromoDismissed";
+    var promo = document.getElementById("iota-promo");
+    if (!promo) return;
+
+    function dismiss() {
+      try {
+        sessionStorage.setItem(STORAGE_KEY, "1");
+      } catch (e) {}
+      promo.classList.remove("is-open");
+      promo.setAttribute("hidden", "");
+      document.removeEventListener("keydown", onKey);
+    }
+
+    function onKey(event) {
+      if (event.key === "Escape") dismiss();
+    }
+
+    function openPromo() {
+      promo.removeAttribute("hidden");
+      promo.classList.add("is-open");
+      document.addEventListener("keydown", onKey);
+    }
+
+    try {
+      if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
+    } catch (e) {}
+
+    // Wait for preloader / landing paint so it doesn't flash under it
+    window.addEventListener("load", function () {
+      setTimeout(openPromo, 500);
+    });
+
+    var closeBtn = document.getElementById("iota-promo-close");
+    var dismissBtn = document.getElementById("iota-promo-dismiss");
+    if (closeBtn) closeBtn.addEventListener("click", dismiss);
+    if (dismissBtn) dismissBtn.addEventListener("click", dismiss);
+
+    promo.addEventListener("click", function (event) {
+      if (event.target === promo) dismiss();
+    });
+  })();
+</script>
